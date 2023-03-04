@@ -1,0 +1,32 @@
+
+  <h1 class="text-center mt-5 tipografia-logotipo">Nuestros libros</h1>
+
+  <section id="libros" class="container madera my-5 px-0 pb-3 rounded">
+    <div
+      id="librosContainer"
+      class="d-flex justify-content-around flex-wrap py-3 py-lg-2 text-center"
+    >
+      <ng-container *ngIf="libros">
+        <div
+          *ngFor="let libro of libros"
+          class="card caja-oferta marron-claro mb-3 mb-lg-0 my-2 my-lg-5 col-11 px-0 col-sm-4 col-lg-2 mx-0 mx-sm-1 mx-lg-3"
+        >
+          <img
+            class="card-img-top img-oferta mt-3"
+            src="{{libro.libro_portada}}"
+            alt="Foto de {{libro.libro_titulo}}"
+          />
+          <div class="card-body d-flex flex-column justify-content-around">
+            <h5 class="card-title fw-bold">{{libro.libro_titulo}}</h5>
+            <p class="card-text">${{libro.libro_precio}}</p>
+          </div>
+          <button
+            class="btn text-light marron-medio border border-0"
+          >
+            Comprar
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+

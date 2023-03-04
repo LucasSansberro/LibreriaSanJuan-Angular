@@ -1,0 +1,131 @@
+<nav class="navbar navbar-expand-lg navbar-dark marron-oscuro">
+  <div class="container px-2 px-sm-0">
+    <a class="navbar-brand tipografia-logotipo navBarTitulo"
+      >Librería San Juan</a
+    >
+    <button
+      onclick="mostrarCarrito()"
+      class="me-auto botonAbrirCarrito ps-md-4 mt-md-2 pb-1 border border-0"
+    >
+      <i class="bi bi-cart"></i
+      ><span id="cantidadCarrito" class="cantidadCarrito">0</span>
+    </button>
+    <span
+      class="ps-md-5 mt-md-2 pb-1 text-white-50"
+      id="herramientasAdmin"
+    ></span>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav d-flex w-50 justify-content-between mt-3">
+        <li
+          class="nav-item text-white-50 d-flex justify-content-between hover"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          <i class="bi bi-person-circle nav-link"></i>
+          <p class="nav-link ms-2 ms-lg-0 me-auto" id="usuarioLogueado">
+            <span *ngIf="!sesionIniciadaBoolean">Anónimo</span>
+          </p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/libros">Libros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contacto">Contacto</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content cremaSuave">
+      <div class="modal-header border-bottom-0">
+        <h2 class="ms-auto fw-bold">Inicio de sesión</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body pb-5">
+        <div class="d-flex flex-column flex-lg-row text-center">
+          <form
+            novalidate
+            [formGroup]="registroUsuario"
+            (ngSubmit)="registrarUsuario()"
+          >
+            <h3>Registrarse</h3>
+            <input
+              type="text"
+              class="swal2-input"
+              placeholder="Correo electrónico"
+              formControlName="name"
+            />
+            <input
+              type="password"
+              class="swal2-input"
+              placeholder="Contraseña"
+              formControlName="password"
+            />
+            <button
+              class="btn btn-primary d-block mt-4 mx-auto"
+              type="submit"
+              [disabled]="registroUsuario.invalid"
+            >
+              Registrarse
+            </button>
+          </form>
+          <form
+            novalidate
+            [formGroup]="inicioSesionUsuario"
+            (ngSubmit)="iniciarSesion()"
+          >
+            <h3>Iniciar sesión</h3>
+            <input
+              type="text"
+              class="swal2-input"
+              placeholder="Correo electrónico"
+              formControlName="name"
+            />
+            <input
+              type="password"
+              class="swal2-input"
+              placeholder="Contraseña"
+              formControlName="password"
+            />
+            <button
+              class="btn btn-primary d-block mt-4 mx-auto"
+              type="submit"
+              [disabled]="inicioSesionUsuario.invalid"
+            >
+              Iniciar sesión
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

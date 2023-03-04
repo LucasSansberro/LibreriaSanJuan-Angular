@@ -1,0 +1,30 @@
+<div class="container madera my-5 px-0 rounded">
+  <div
+      class="d-flex justify-content-around flex-wrap py-3 py-lg-5 text-center"
+      id="librosContainerIndex"
+    >
+      <ng-container *ngIf="libros">
+        <div
+          *ngFor="let libro of libros; index as i"
+          class="card caja-oferta marron-claro mb-3 mb-lg-0 m-1 col-11 col-sm-7 col-lg-3"
+        >
+          <img
+            class="card-img-top img-oferta mt-3"
+            src="{{ libro.libro_portada }}"
+            alt="Foto de {{ libro.libro_titulo }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ libro.libro_titulo }}</h5>
+            <p class="card-text">${{ libro.libro_precio + 100 }}</p>
+            <p class="card-text">${{ libro.libro_precio }}</p>
+          </div>
+          <button class="btn text-light marron-medio border border-0">
+            Comprar
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <button class="btn marron-medio w-100 text-light border border-0">
+      <a class="w-100 d-block" href="./libros.html">Ver más libros</a>
+    </button>
+  </div>

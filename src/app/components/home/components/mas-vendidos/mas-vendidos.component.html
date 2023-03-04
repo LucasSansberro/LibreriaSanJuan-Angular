@@ -1,0 +1,51 @@
+<div
+  class="d-flex flex-lg-row flex-column justify-content-around my-5 align-items-center container"
+>
+  <div class="mb-3 mb-lg-0">
+    <h3 class="madera">Los más vendidos</h3>
+    <p>
+      No te quedes afuera. Los éxitos más grandes del año, ahora con descuento
+    </p>
+  </div>
+  <div
+    id="carouselExampleFade"
+    class="carousel slide carousel-fade container-carrousel"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-inner" id="librosCarrousel">
+      <ng-container *ngIf="libros">
+        <div
+          *ngFor="let libro of libros; index as i"
+          class="carousel-item"
+          [ngClass]="{
+            active: i == 0
+          }"
+        >
+          <img
+            class="d-block img-carrousel"
+            src="{{ libro.libro_portada }}"
+            alt="Foto de ${libro.libro_titulo}"
+          />
+        </div>
+      </ng-container>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleFade"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleFade"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>

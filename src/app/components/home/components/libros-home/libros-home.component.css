@@ -1,0 +1,9 @@
+.img-oferta {
+  width: 60%;
+  height: 300px;
+  margin: 0 auto;
+}
+
+#libros button:hover {
+  background-color: #bb8955;
+}
