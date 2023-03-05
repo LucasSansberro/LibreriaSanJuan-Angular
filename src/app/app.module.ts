@@ -17,6 +17,7 @@ import { LibrosHomeComponent } from './components/home/components/libros-home/li
 import { NavComponent } from './components/navbar/components/nav/nav.component';
 import { OverlayCarritoComponent } from './components/navbar/components/overlay-carrito/overlay-carrito.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginModalComponent } from './components/navbar/components/login-modal/login-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LibrosHomeComponent,
     NavComponent,
     OverlayCarritoComponent,
+    LoginModalComponent,
   ],
   imports: [
     BrowserModule,
