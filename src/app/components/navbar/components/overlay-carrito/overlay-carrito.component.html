@@ -3,13 +3,13 @@
     <div class="row justify-content-between">
       <div class="col-lg-8 cuadroCarrito">
         <ul id="listaCarrito" class="listaCarrito">
-          <!-- Entra li por JS -->
+          <!-- TODO Entra li por JS -->
         </ul>
       </div>
       <div
         class="col-lg-4 col-xl-4 d-flex flex-column justify-content-around"
       >
-        <button class="botonesCarrito crema py-1" onclick="ocultarCarrito()">
+        <button class="botonesCarrito crema py-1" (click)="carritoService.ocultarCarrito()">
           <i class="bi bi-x-lg"></i>
         </button>
         <button class="botonesCarrito crema py-1" onclick="ordenarCarrito()">

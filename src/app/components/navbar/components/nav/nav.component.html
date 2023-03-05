@@ -4,7 +4,7 @@
       >Librería San Juan</a
     >
     <button
-      onclick="mostrarCarrito()"
+      (click)="carritoService.mostrarCarrito()"
       class="me-auto botonAbrirCarrito ps-md-4 mt-md-2 pb-1 border border-0"
     >
       <i class="bi bi-cart"></i
@@ -30,11 +30,11 @@
         <li
           class="nav-item text-white-50 d-flex justify-content-between hover"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#loginModal"
         >
           <i class="bi bi-person-circle nav-link"></i>
           <p class="nav-link ms-2 ms-lg-0 me-auto" id="usuarioLogueado">
-            <span *ngIf="!sesionIniciadaBoolean">Anónimo</span>
+            <span>{{ sesionService.sesionCorreo }}</span>
           </p>
         </li>
         <li class="nav-item">

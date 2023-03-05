@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
   selector: 'app-overlay-carrito',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./overlay-carrito.component.css']
 })
 export class OverlayCarritoComponent {
+constructor( public carritoService : CarritoService){
 
+}
 }
