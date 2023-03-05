@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuarios } from 'src/app/models/Usuarios';
 import { DataService } from 'src/app/services/data.service';
+import { SesionService } from 'src/app/services/sesion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,11 +11,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login-modal.component.css'],
 })
 export class LoginModalComponent implements OnInit {
-  sesionIniciadaBoolean: boolean = false;
   registroUsuario!: FormGroup;
   inicioSesionUsuario!: FormGroup;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    public sesionService: SesionService
+  ) {}
 
   registrarUsuario() {
     const registroCorreo = this.registroUsuario.value.name;
@@ -25,14 +28,16 @@ export class LoginModalComponent implements OnInit {
         (usuario: Usuarios) => usuario.usuario_correo == registroCorreo
       );
       usuarioRepetido == undefined
-        ? this.dataService
+        ? (this.dataService
             .postUser(
               JSON.stringify({
                 usuario_correo: registroCorreo,
                 usuario_clave: registroPassword,
               })
             )
-            .subscribe()
+            .subscribe(),
+          this.sesionService.renderSesion(data[data.length - 1]),
+          document.getElementById('closeButton')?.click())
         : console.log('Malísimo');
     });
 
@@ -41,17 +46,17 @@ export class LoginModalComponent implements OnInit {
   iniciarSesion() {
     const sesionCorreo = this.inicioSesionUsuario.value.name;
     const sesionPassword = this.inicioSesionUsuario.value.password;
-    this.dataService
-      .getUsuarios()
-      .subscribe((data) =>
-        data.filter(
-          (usuario: Usuarios) =>
-            usuario.usuario_correo == sesionCorreo &&
-            usuario.usuario_clave == sesionPassword
-        ).length > 0
-          ? console.log('Buenísimo')
-          : console.log('Malísimo')
+    this.dataService.getUsuarios().subscribe((data) => {
+      const user: Usuarios[] = data.filter(
+        (usuario: Usuarios) =>
+          usuario.usuario_correo == sesionCorreo &&
+          usuario.usuario_clave == sesionPassword
       );
+      user.length > 0
+        ? (this.sesionService.renderSesion(user[0]),
+          document.getElementById('closeButton')?.click())
+        : console.log('Malísimo');
+    });
     this.inicioSesionUsuario.reset();
   }
 
@@ -68,3 +73,6 @@ export class LoginModalComponent implements OnInit {
     });
   }
 }
+
+//TODO De momento el rendersesion con el post no funciona correctamente. Le falta actualizarse
+//Lo ideal sería que el backend respondiese, tras el post, con el elemento creado. Línea 39
