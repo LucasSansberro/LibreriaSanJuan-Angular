@@ -18,6 +18,8 @@ import { NavComponent } from './components/navbar/components/nav/nav.component';
 import { OverlayCarritoComponent } from './components/navbar/components/overlay-carrito/overlay-carrito.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginModalComponent } from './components/navbar/components/login-modal/login-modal.component';
+import { SesionService } from './services/sesion.service';
+import { CarritoService } from './services/carrito.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { LoginModalComponent } from './components/navbar/components/login-modal/
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [DataService],
+  providers: [DataService, SesionService, CarritoService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

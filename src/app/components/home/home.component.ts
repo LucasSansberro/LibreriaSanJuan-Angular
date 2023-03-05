@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Libros } from 'src/app/models/Libros';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  libros: any;
+  libros: Array<Libros> = [];
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
