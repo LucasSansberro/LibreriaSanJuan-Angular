@@ -21,6 +21,9 @@ export class DataService {
     return this.http.get(`${this.URL}/usuarios`);
   }
   postUser(user: any): Observable<any> {
-    return this.http.post(`${this.URL}/usuarios`, user, httpOptions)
+    return this.http.post(`${this.URL}/usuarios`, user, httpOptions);
+  }
+  postFactura(factura: any): Observable<any> {
+    return this.http.post(`${this.URL}/facturas`, factura, httpOptions);
   }
 }

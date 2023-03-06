@@ -10,6 +10,7 @@ export class SesionService {
   sesionIniciadaBoolean: boolean = false;
   sesionIniciada!: Usuarios;
   sesionCorreo: string = 'Anónimo';
+  isAdmin: boolean = false;
 
   constructor() {}
 
@@ -20,7 +21,9 @@ export class SesionService {
       usuario.usuario_correo.indexOf('@')
     );
     this.sesionIniciadaBoolean = true;
-
+    if (usuario.usuario_correo == 'admin@gmail.com') {
+      this.isAdmin = true;
+    }
     return Swal.fire({
       icon: 'success',
       html: `Bienvenido ${this.sesionCorreo}`,
@@ -35,7 +38,8 @@ export class SesionService {
     };
     this.sesionCorreo = 'Anónimo';
     this.sesionIniciadaBoolean = false;
-    document.getElementById('closeButton')?.click()
+    this.isAdmin = false;
+    document.getElementById('closeButton')?.click();
     return Swal.fire({
       icon: 'success',
       html: `Sesion cerrada`,

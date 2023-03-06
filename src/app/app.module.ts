@@ -42,7 +42,7 @@ import { CarritoService } from './services/carrito.service';
     BrowserAnimationsModule,
     SweetAlert2Module.forRoot(),
     HttpClientModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [DataService, SesionService, CarritoService],
   bootstrap: [AppComponent],

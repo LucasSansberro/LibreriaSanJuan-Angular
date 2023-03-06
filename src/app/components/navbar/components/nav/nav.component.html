@@ -8,11 +8,14 @@
       class="me-auto botonAbrirCarrito ps-md-4 mt-md-2 pb-1 border border-0"
     >
       <i class="bi bi-cart"></i
-      ><span id="cantidadCarrito" class="cantidadCarrito">0</span>
+      ><span id="cantidadCarrito" class="cantidadCarrito">{{
+        carritoService.carrito.length
+      }}</span>
     </button>
     <span
+      *ngIf="sesionService.isAdmin"
       class="ps-md-5 mt-md-2 pb-1 text-white-50"
-      id="herramientasAdmin"
+      ><a class="me-3" href="./admin.html"><i class="bi bi-tools"></i></a
     ></span>
     <button
       class="navbar-toggler"

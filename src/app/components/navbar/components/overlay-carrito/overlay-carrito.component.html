@@ -3,32 +3,70 @@
     <div class="row justify-content-between">
       <div class="col-lg-8 cuadroCarrito">
         <ul id="listaCarrito" class="listaCarrito">
-          <!-- TODO Entra li por JS -->
+          <ng-container *ngIf="carritoService.carrito">
+            <li
+              *ngFor="let libro of carritoService.carrito"
+              class="d-flex justify-content-between align-items-center mt-4"
+            >
+              <p>{{ libro.libro_titulo }} <b>|</b> ${{ libro.libro_precio }}</p>
+              <div class="text-center d-flex align-items-center mb-3">
+                <button
+                  class="btn px-1"
+                  (click)="
+                    carritoService.decrementarCantidadCarrito(libro.libro_id)
+                  "
+                >
+                  <i class="bi bi-caret-left"></i>
+                </button>
+                <span class="border border-dark pb-1 px-2">
+                  {{ libro.libro_cantidad }}
+                </span>
+                <button
+                  class="btn me-2 px-1"
+                  (click)="
+                    carritoService.incrementarCantidadCarrito(libro.libro_id)
+                  "
+                >
+                  <i class="bi bi-caret-right"></i>
+                </button>
+                <button
+                  class="botonEliminar crema"
+                  (click)="carritoService.eliminarLibroCarrito(libro.libro_id)"
+                >
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
+              </div>
+            </li>
+          </ng-container>
         </ul>
       </div>
-      <div
-        class="col-lg-4 col-xl-4 d-flex flex-column justify-content-around"
-      >
-        <button class="botonesCarrito crema py-1" (click)="carritoService.ocultarCarrito()">
+      <div class="col-lg-4 col-xl-4 d-flex flex-column justify-content-around">
+        <button
+          class="botonesCarrito crema py-1"
+          (click)="carritoService.ocultarCarrito()"
+        >
           <i class="bi bi-x-lg"></i>
         </button>
-        <button class="botonesCarrito crema py-1" onclick="ordenarCarrito()">
+        <button
+          class="botonesCarrito crema py-1"
+          (click)="carritoService.ordenarCarrito()"
+        >
           <span>Ordenar por precio de menor a mayor</span>
         </button>
-        <button class="botonesCarrito crema py-1" onclick="vaciarCarrito()">
+        <button
+          class="botonesCarrito crema py-1"
+          (click)="carritoService.vaciarCarrito()"
+        >
           <span>Vaciar carrito</span>
         </button>
-        <p
-          id="textoPrecioFinal"
-          class="text-center crema botonesCarrito py-1"
-        >
-          Precio final: $0
+        <p id="textoPrecioFinal" class="text-center crema botonesCarrito py-1">
+          Precio final: ${{ carritoService.precioFinal }}
         </p>
         <form id="formulario" role="form">
           <button
             class="botonesCarrito crema botonDeEnvio col-12"
-            onclick="enviarCarrito()"
-            type="submit"
+            (click)="carritoService.enviarCarrito()"
+            type="button"
             value="SEND"
           >
             <div class="animacion-botonDeEnvio">

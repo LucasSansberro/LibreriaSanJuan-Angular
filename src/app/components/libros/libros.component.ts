@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Libros } from 'src/app/models/Libros';
+import { CarritoService } from 'src/app/services/carrito.service';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -9,8 +10,14 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class LibrosComponent {
   libros: Array<Libros> = [];
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private carritoService: CarritoService
+  ) {}
 
+  agregarLibroCarrito(libro: any) {
+    this.carritoService.agregarLibroCarrito(libro);
+  }
   ngOnInit(): void {
     this.dataService.getLibros().subscribe((data) => (this.libros = data));
   }
