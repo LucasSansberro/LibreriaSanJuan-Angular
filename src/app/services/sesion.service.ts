@@ -7,19 +7,7 @@ import { Usuarios } from '../models/Usuarios';
   providedIn: 'root',
 })
 export class SesionService {
-  sesionUpdated: EventEmitter<any> = new EventEmitter();
-  getSesionCorreo(): any {
-    return this.sesionCorreo;
-  }
-  getIsAdmin(): any {
-    return this.isAdmin;
-  }
-  getSesionIniciadaBoolean() {
-    return this.sesionIniciadaBoolean;
-  }
-  getSesionIniciadaCorreo(){
-    return this.sesionIniciada.usuario_correo
-  }
+  sesionUpdated: EventEmitter<object> = new EventEmitter();
 
   sesionIniciadaBoolean: boolean = false;
   sesionIniciada!: Usuarios;
@@ -28,7 +16,20 @@ export class SesionService {
 
   constructor() {}
 
-  renderSesion(usuario: Usuarios): any {
+  getSesionCorreo(): string {
+    return this.sesionCorreo;
+  }
+  getIsAdmin(): boolean {
+    return this.isAdmin;
+  }
+  getSesionIniciadaBoolean(): boolean {
+    return this.sesionIniciadaBoolean;
+  }
+  getSesionIniciadaCorreo(): string {
+    return this.sesionIniciada.usuario_correo;
+  }
+
+  renderSesion(usuario: Usuarios): Promise<any> {
     this.sesionIniciada = usuario;
     this.sesionCorreo = usuario.usuario_correo.substring(
       0,
@@ -50,7 +51,7 @@ export class SesionService {
     });
   }
 
-  cerrarSesion(): any {
+  cerrarSesion(): Promise<any> {
     this.sesionIniciada = {
       usuario_id: 0,
       usuario_correo: '',

@@ -1,51 +1,65 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
-};
+import { Libros } from '../models/Libros';
+import { Usuarios } from '../models/Usuarios';
+import { Facturas } from '../models/Facturas';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
+  httpOptions: object = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
   private URL = 'http://localhost:8080/apirest-1.0-SNAPSHOT/api';
   constructor(private http: HttpClient) {}
-  getLibros(): Observable<any> {
-    return this.http.get(`${this.URL}/libros`);
+  getLibros(): Observable<Array<Libros>> {
+    return this.http.get<Array<Libros>>(`${this.URL}/libros`);
   }
-  postLibro(libro: any): Observable<any> {
-    return this.http.post(`${this.URL}/libros`, libro, httpOptions);
+  postLibro(libro: string): Observable<Libros> {
+    return this.http.post<Libros>(
+      `${this.URL}/libros`,
+      libro,
+      this.httpOptions
+    );
   }
-  updateLibro(libro: any): Observable<any> {
-    return this.http.put(`${this.URL}/libros`, libro, httpOptions);
+  updateLibro(libro: string): Observable<Libros> {
+    return this.http.put<Libros>(`${this.URL}/libros`, libro, this.httpOptions);
   }
-  deleteLibro(id: any): Observable<any> {
-    return this.http.delete(`${this.URL}/libros`, {
+  deleteLibro(id: number): Observable<Libros> {
+    return this.http.delete<Libros>(`${this.URL}/libros`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      body:  id ,
+      body: id,
     });
   }
-  getUsuarios(): Observable<any> {
-    return this.http.get(`${this.URL}/usuarios`);
+  getUsuarios(): Observable<Array<Usuarios>> {
+    return this.http.get<Array<Usuarios>>(`${this.URL}/usuarios`);
   }
-  postUser(user: any): Observable<any> {
-    return this.http.post(`${this.URL}/usuarios`, user, httpOptions);
+  postUser(user: string): Observable<Usuarios> {
+    return this.http.post<Usuarios>(
+      `${this.URL}/usuarios`,
+      user,
+      this.httpOptions
+    );
   }
-  deleteUser(id: any): Observable<any> {
-    return this.http.delete(`${this.URL}/usuarios`, {
+  deleteUser(id: number): Observable<Usuarios> {
+    return this.http.delete<Usuarios>(`${this.URL}/usuarios`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      body: id ,
+      body: id,
     });
   }
-  postFactura(factura: any): Observable<any> {
-    return this.http.post(`${this.URL}/facturas`, factura, httpOptions);
+  postFactura(factura: string): Observable<Facturas> {
+    return this.http.post<Facturas>(
+      `${this.URL}/facturas`,
+      factura,
+      this.httpOptions
+    );
   }
 }

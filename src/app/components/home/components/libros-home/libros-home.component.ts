@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Libros } from 'src/app/models/Libros';
 import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
@@ -7,10 +8,10 @@ import { CarritoService } from 'src/app/services/carrito.service';
   styleUrls: ['./libros-home.component.css'],
 })
 export class LibrosHomeComponent {
-  @Input() libros: any;
+  @Input() libros!: Array<Libros>
 
   constructor(private carritoService: CarritoService) {}
-  agregarLibroCarrito(libro : any){
+  agregarLibroCarrito(libro : Libros){
     this.carritoService.agregarLibroCarrito(libro)
   }
 }

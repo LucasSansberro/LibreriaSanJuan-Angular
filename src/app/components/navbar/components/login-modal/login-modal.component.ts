@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuarios } from 'src/app/models/Usuarios';
 import { DataService } from 'src/app/services/data.service';
 import { SesionService } from 'src/app/services/sesion.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-modal',
@@ -13,15 +12,15 @@ import Swal from 'sweetalert2';
 export class LoginModalComponent implements OnInit {
   registroUsuario!: FormGroup;
   inicioSesionUsuario!: FormGroup;
-  sesionIniciadaBoolean!: boolean
-  sesionIniciadaCorreo!: string
+  sesionIniciadaBoolean!: boolean;
+  sesionIniciadaCorreo!: string;
 
   constructor(
     private dataService: DataService,
     private sesionService: SesionService
   ) {}
 
-  registrarUsuario() {
+  registrarUsuario(): void {
     const registroCorreo = this.registroUsuario.value.name;
     const registroPassword = this.registroUsuario.value.password;
 
@@ -40,12 +39,12 @@ export class LoginModalComponent implements OnInit {
             .subscribe(),
           this.sesionService.renderSesion(data[data.length - 1]),
           document.getElementById('closeButton')?.click())
-        : console.log('Malísimo');
+        : console.log('Malísimo'); // TODO cambiar esto
     });
-
     this.registroUsuario.reset();
   }
-  iniciarSesion() {
+
+  iniciarSesion(): void {
     const sesionCorreo = this.inicioSesionUsuario.value.name;
     const sesionPassword = this.inicioSesionUsuario.value.password;
     this.dataService.getUsuarios().subscribe((data) => {
@@ -61,12 +60,11 @@ export class LoginModalComponent implements OnInit {
     });
     this.inicioSesionUsuario.reset();
   }
-  cerrarSesion(){
-    this.sesionService.cerrarSesion()
+
+  cerrarSesion(): void {
+    this.sesionService.cerrarSesion();
   }
   ngOnInit(): void {
-    Swal.showValidationMessage(''); //Carga de estilos de Swal para el form
-
     this.registroUsuario = new FormGroup({
       name: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -78,8 +76,10 @@ export class LoginModalComponent implements OnInit {
 
     this.sesionService.sesionUpdated.subscribe(
       () => (
-        (this.sesionIniciadaBoolean = this.sesionService.getSesionIniciadaBoolean()),
-        (this.sesionIniciadaCorreo = this.sesionService.getSesionIniciadaCorreo())
+        (this.sesionIniciadaBoolean =
+          this.sesionService.getSesionIniciadaBoolean()),
+        (this.sesionIniciadaCorreo =
+          this.sesionService.getSesionIniciadaCorreo())
       )
     );
   }

@@ -15,7 +15,7 @@ export class LibrosComponent {
     private carritoService: CarritoService
   ) {}
 
-  agregarLibroCarrito(libro: any) {
+  agregarLibroCarrito(libro: Libros) {
     this.carritoService.agregarLibroCarrito(libro);
   }
   ngOnInit(): void {

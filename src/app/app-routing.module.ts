@@ -6,10 +6,10 @@ import { HomeComponent } from './components/home/home.component';
 import { LibrosComponent } from './components/libros/libros.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'libros', component: LibrosComponent },
-  { path: 'contacto', component: ContactoComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: '', pathMatch: 'full' ,component: HomeComponent },
+  { path: 'libros',  pathMatch: 'full', component: LibrosComponent },
+  { path: 'contacto',  pathMatch: 'full', component: ContactoComponent },
+  { path: 'admin',  pathMatch: 'full', component: AdminComponent },
 ];
 
 @NgModule({

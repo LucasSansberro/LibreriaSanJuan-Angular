@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Libros } from 'src/app/models/Libros';
 import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
@@ -7,8 +8,9 @@ import { CarritoService } from 'src/app/services/carrito.service';
   styleUrls: ['./overlay-carrito.component.css'],
 })
 export class OverlayCarritoComponent implements OnInit {
-  carrito!: any;
-  precioFinal!: any;
+  carrito!: Array<Libros>;
+  precioFinal!: number;
+
   constructor(private carritoService: CarritoService) {}
   ngOnInit(): void {
     this.carritoService.carritoUpdated.subscribe(
@@ -18,25 +20,25 @@ export class OverlayCarritoComponent implements OnInit {
       )
     );
   }
-  incrementarCantidadCarrito(id: any) {
+  incrementarCantidadCarrito(id: number): void {
     this.carritoService.incrementarCantidadCarrito(id);
   }
-  decrementarCantidadCarrito(id: any) {
+  decrementarCantidadCarrito(id: number): void {
     this.carritoService.decrementarCantidadCarrito(id);
   }
-  eliminarLibroCarrito(id: any) {
+  eliminarLibroCarrito(id: number): void {
     this.carritoService.eliminarLibroCarrito(id);
   }
-  ocultarCarrito() {
+  ocultarCarrito(): void {
     this.carritoService.ocultarCarrito();
   }
-  ordenarCarrito() {
+  ordenarCarrito(): void {
     this.carritoService.ordenarCarrito();
   }
-  vaciarCarrito() {
+  vaciarCarrito(): void {
     this.carritoService.vaciarCarrito();
   }
-  enviarCarrito() {
+  enviarCarrito(): void {
     this.carritoService.enviarCarrito();
   }
 }

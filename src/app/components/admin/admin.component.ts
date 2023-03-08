@@ -14,8 +14,8 @@ export class AdminComponent implements OnInit {
   usuarios: Array<Usuarios> = [];
   constructor(private dataService: DataService) {}
 
-  eliminarUsuario(id: any, correo: any) {
-    Swal.fire({
+  async eliminarUsuario(id: number, correo: string): Promise<void> {
+    const result = await Swal.fire({
       title: '¿Estás seguro?',
       text: `¿Quieres eliminar al usuario ${correo}?`,
       showCancelButton: true,
@@ -23,18 +23,24 @@ export class AdminComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       allowOutsideClick: true,
       background: '#FFFDD0',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.dataService.deleteUser(id).subscribe();
-        this.usuarios = this.usuarios.filter((user) => user.usuario_id != id);
-      }
     });
+    if (result.isConfirmed) {
+      this.dataService.deleteUser(id).subscribe();
+      this.usuarios = this.usuarios.filter((user) => user.usuario_id != id);
+    }
   }
 
-  editarLibro(id: any, titulo: any, precio: any, autor: any, portada: any) {
-    Swal.fire({
-      title: 'Editar libro',
-      html: `
+  async editarLibro(
+    id: number,
+    titulo: string,
+    precio: number,
+    autor: string,
+    portada: string
+  ): Promise<void> {
+    try {
+      const result = await Swal.fire({
+        title: 'Editar libro',
+        html: `
       <div class="d-flex flex-column justify-content-around">
       <label for="titulo">Título</label>
       <input type="text" id="titulo" class="swal2-input mb-4" name="titulo" value='${titulo}'>
@@ -45,55 +51,54 @@ export class AdminComponent implements OnInit {
       <label for="portada">Portada</label>
       <input type="text" id="portada" class="swal2-input mb-4" name="portada" value=${portada}>
       </div>`,
-      confirmButtonText: 'Confirmar cambios',
-      focusConfirm: false,
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      showCloseButton: true,
-      background: '#FFFDD0',
-      preConfirm: () => {
-        const titulo = (
-          Swal.getPopup()!.querySelector('#titulo') as HTMLInputElement
-        ).value;
-        const precio = (
-          Swal.getPopup()!.querySelector('#precio') as HTMLInputElement
-        ).value;
-        const autor = (
-          Swal.getPopup()!.querySelector('#autor') as HTMLInputElement
-        ).value;
-        const portada = (
-          Swal.getPopup()!.querySelector('#portada') as HTMLInputElement
-        ).value;
+        confirmButtonText: 'Confirmar cambios',
+        focusConfirm: false,
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        showCloseButton: true,
+        background: '#FFFDD0',
+        preConfirm: () => {
+          const titulo = (
+            Swal.getPopup()!.querySelector('#titulo') as HTMLInputElement
+          ).value;
+          const precio = (
+            Swal.getPopup()!.querySelector('#precio') as HTMLInputElement
+          ).value;
+          const autor = (
+            Swal.getPopup()!.querySelector('#autor') as HTMLInputElement
+          ).value;
+          const portada = (
+            Swal.getPopup()!.querySelector('#portada') as HTMLInputElement
+          ).value;
 
-        return { titulo, precio, autor, portada };
-      },
-    })
-      .then((result) => {
-        if (result.isConfirmed) {
-          const updatedValues = {
-            libro_id: id,
-            libro_precio: parseInt(result.value!.precio),
-            libro_titulo: result.value!.titulo,
-            libro_autor: result.value!.autor,
-            libro_portada: result.value!.portada,
-          };
+          return { titulo, precio, autor, portada };
+        },
+      });
+      if (result.isConfirmed) {
+        const updatedValues = {
+          libro_id: id,
+          libro_precio: parseInt(result.value!.precio),
+          libro_titulo: result.value!.titulo,
+          libro_autor: result.value!.autor,
+          libro_portada: result.value!.portada,
+        };
 
-          this.dataService
-            .updateLibro(JSON.stringify(updatedValues))
-            .subscribe();
-          const libroEditado = this.libros.find(
-            (libroBuscado) => libroBuscado.libro_id == id
-          );
-          this.libros[this.libros.indexOf(libroEditado!)] = updatedValues;
-        }
-      })
-      .catch(() => console.log('Error de parte del servidor'));
+        this.dataService.updateLibro(JSON.stringify(updatedValues)).subscribe();
+        const libroEditado = this.libros.find(
+          (libroBuscado) => libroBuscado.libro_id == id
+        );
+        this.libros[this.libros.indexOf(libroEditado!)] = updatedValues;
+      }
+    } catch {
+      return console.log('Error de parte del servidor');
+    }
   }
 
-  agregarLibro() {
-    Swal.fire({
-      title: 'Agregar libro',
-      html: `
+  async agregarLibro(): Promise<void> {
+    try {
+      const result = await Swal.fire({
+        title: 'Agregar libro',
+        html: `
       <div class="d-flex flex-column justify-content-around">
       <label for="titulo">Título</label>
       <input type="text" id="titulo" class="swal2-input mb-4" name="titulo" placeholder="Título">
@@ -104,48 +109,45 @@ export class AdminComponent implements OnInit {
       <label for="portada">Portada</label>
       <input type="text" id="portada" class="swal2-input mb-4" name="portada" placeholder="Portada">
       </div>`,
-      confirmButtonText: 'Confirmar',
-      focusConfirm: false,
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      showCloseButton: true,
-      background: '#FFFDD0',
-      preConfirm: () => {
-        const titulo = (
-          Swal.getPopup()!.querySelector('#titulo') as HTMLInputElement
-        ).value;
-        const precio = (
-          Swal.getPopup()!.querySelector('#precio') as HTMLInputElement
-        ).value;
-        const autor = (
-          Swal.getPopup()!.querySelector('#autor') as HTMLInputElement
-        ).value;
-        const portada = (
-          Swal.getPopup()!.querySelector('#portada') as HTMLInputElement
-        ).value;
+        confirmButtonText: 'Confirmar',
+        focusConfirm: false,
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        showCloseButton: true,
+        background: '#FFFDD0',
+        preConfirm: () => {
+          const titulo = (
+            Swal.getPopup()!.querySelector('#titulo') as HTMLInputElement
+          ).value;
+          const precio = (
+            Swal.getPopup()!.querySelector('#precio') as HTMLInputElement
+          ).value;
+          const autor = (
+            Swal.getPopup()!.querySelector('#autor') as HTMLInputElement
+          ).value;
+          const portada = (
+            Swal.getPopup()!.querySelector('#portada') as HTMLInputElement
+          ).value;
 
-        return { titulo, precio, autor, portada };
-      },
-    })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          const nuevoLibro = {
-            libro_precio: parseInt(result.value!.precio),
-            libro_titulo: result.value!.titulo,
-            libro_autor: result.value!.autor,
-            libro_portada: result.value!.portada,
-          };
-          this.dataService.postLibro(JSON.stringify(nuevoLibro)).subscribe();
-          //TODO Para renderiar hace falta que el back devuelva el id del post
-        }
-      })
-      .catch(() => {
-        console.log('Error de parte del servidor');
+          return { titulo, precio, autor, portada };
+        },
       });
+      if (result.isConfirmed) {
+        const nuevoLibro = {
+          libro_precio: parseInt(result.value!.precio),
+          libro_titulo: result.value!.titulo,
+          libro_autor: result.value!.autor,
+          libro_portada: result.value!.portada,
+        };
+        this.dataService.postLibro(JSON.stringify(nuevoLibro)).subscribe();
+      }
+    } catch {
+      console.log('Error de parte del servidor');
+    }
   }
 
-  eliminarLibro(id: any, titulo: any) {
-    Swal.fire({
+  async eliminarLibro(id: number, titulo: string): Promise<void> {
+    const result = await Swal.fire({
       title: '¿Estás seguro?',
       text: `¿Quieres eliminar a ${titulo} de la lista de libros?`,
       showCancelButton: true,
@@ -153,14 +155,13 @@ export class AdminComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       allowOutsideClick: true,
       background: '#FFFDD0',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.dataService.deleteLibro(id).subscribe();
-        this.libros = this.libros.filter(
-          (libroBuscado) => libroBuscado.libro_id != id
-        );
-      }
     });
+    if (result.isConfirmed) {
+      this.dataService.deleteLibro(id).subscribe();
+      this.libros = this.libros.filter(
+        (libroBuscado) => libroBuscado.libro_id != id
+      );
+    }
   }
 
   ngOnInit(): void {
