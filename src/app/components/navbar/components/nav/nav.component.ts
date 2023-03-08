@@ -28,7 +28,7 @@ export class NavComponent implements OnInit {
       )
     );
   }
-  mostrarCarrito() {
+  mostrarCarrito() : void {
     this.carritoService.mostrarCarrito();
   }
 }
