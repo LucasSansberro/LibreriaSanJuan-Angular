@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Usuarios } from '../models/Usuarios';
@@ -7,6 +7,20 @@ import { Usuarios } from '../models/Usuarios';
   providedIn: 'root',
 })
 export class SesionService {
+  sesionUpdated: EventEmitter<any> = new EventEmitter();
+  getSesionCorreo(): any {
+    return this.sesionCorreo;
+  }
+  getIsAdmin(): any {
+    return this.isAdmin;
+  }
+  getSesionIniciadaBoolean() {
+    return this.sesionIniciadaBoolean;
+  }
+  getSesionIniciadaCorreo(){
+    return this.sesionIniciada.usuario_correo
+  }
+
   sesionIniciadaBoolean: boolean = false;
   sesionIniciada!: Usuarios;
   sesionCorreo: string = 'Anónimo';
@@ -24,12 +38,18 @@ export class SesionService {
     if (usuario.usuario_correo == 'admin@gmail.com') {
       this.isAdmin = true;
     }
+    this.sesionUpdated.emit({
+      sesionCorreo: this.sesionCorreo,
+      isAdmin: this.isAdmin,
+      sesionIniciada: this.sesionIniciada,
+    });
     return Swal.fire({
       icon: 'success',
       html: `Bienvenido ${this.sesionCorreo}`,
       background: '#FFFDD0',
     });
   }
+
   cerrarSesion(): any {
     this.sesionIniciada = {
       usuario_id: 0,
@@ -39,6 +59,11 @@ export class SesionService {
     this.sesionCorreo = 'Anónimo';
     this.sesionIniciadaBoolean = false;
     this.isAdmin = false;
+    this.sesionUpdated.emit({
+      sesionCorreo: this.sesionCorreo,
+      isAdmin: this.isAdmin,
+      sesionIniciada: this.sesionIniciada,
+    });
     document.getElementById('closeButton')?.click();
     return Swal.fire({
       icon: 'success',

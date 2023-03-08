@@ -3,18 +3,16 @@
     <div class="row justify-content-between">
       <div class="col-lg-8 cuadroCarrito">
         <ul id="listaCarrito" class="listaCarrito">
-          <ng-container *ngIf="carritoService.carrito">
+          <ng-container *ngIf="carrito">
             <li
-              *ngFor="let libro of carritoService.carrito"
+              *ngFor="let libro of carrito"
               class="d-flex justify-content-between align-items-center mt-4"
             >
               <p>{{ libro.libro_titulo }} <b>|</b> ${{ libro.libro_precio }}</p>
               <div class="text-center d-flex align-items-center mb-3">
                 <button
                   class="btn px-1"
-                  (click)="
-                    carritoService.decrementarCantidadCarrito(libro.libro_id)
-                  "
+                  (click)="decrementarCantidadCarrito(libro.libro_id)"
                 >
                   <i class="bi bi-caret-left"></i>
                 </button>
@@ -23,15 +21,13 @@
                 </span>
                 <button
                   class="btn me-2 px-1"
-                  (click)="
-                    carritoService.incrementarCantidadCarrito(libro.libro_id)
-                  "
+                  (click)="incrementarCantidadCarrito(libro.libro_id)"
                 >
                   <i class="bi bi-caret-right"></i>
                 </button>
                 <button
                   class="botonEliminar crema"
-                  (click)="carritoService.eliminarLibroCarrito(libro.libro_id)"
+                  (click)="eliminarLibroCarrito(libro.libro_id)"
                 >
                   <i class="bi bi-trash3-fill"></i>
                 </button>
@@ -41,31 +37,22 @@
         </ul>
       </div>
       <div class="col-lg-4 col-xl-4 d-flex flex-column justify-content-around">
-        <button
-          class="botonesCarrito crema py-1"
-          (click)="carritoService.ocultarCarrito()"
-        >
+        <button class="botonesCarrito crema py-1" (click)="ocultarCarrito()">
           <i class="bi bi-x-lg"></i>
         </button>
-        <button
-          class="botonesCarrito crema py-1"
-          (click)="carritoService.ordenarCarrito()"
-        >
+        <button class="botonesCarrito crema py-1" (click)="ordenarCarrito()">
           <span>Ordenar por precio de menor a mayor</span>
         </button>
-        <button
-          class="botonesCarrito crema py-1"
-          (click)="carritoService.vaciarCarrito()"
-        >
+        <button class="botonesCarrito crema py-1" (click)="vaciarCarrito()">
           <span>Vaciar carrito</span>
         </button>
         <p id="textoPrecioFinal" class="text-center crema botonesCarrito py-1">
-          Precio final: ${{ carritoService.precioFinal }}
+          Precio final: ${{ precioFinal }}
         </p>
         <form id="formulario" role="form">
           <button
             class="botonesCarrito crema botonDeEnvio col-12"
-            (click)="carritoService.enviarCarrito()"
+            (click)="enviarCarrito()"
             type="button"
             value="SEND"
           >

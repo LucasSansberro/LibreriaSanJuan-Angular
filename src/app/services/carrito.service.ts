@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Libros } from '../models/Libros';
 import { DataService } from './data.service';
@@ -8,8 +8,17 @@ import { SesionService } from './sesion.service';
   providedIn: 'root',
 })
 export class CarritoService {
+  carritoUpdated: EventEmitter<object> = new EventEmitter();
+
   carrito: any = [];
   precioFinal: number = 0;
+
+  getCarrito() {
+    return this.carrito;
+  }
+  getPrecioFinal() {
+    return this.precioFinal;
+  }
 
   constructor(
     private sesionService: SesionService,
@@ -49,6 +58,11 @@ export class CarritoService {
         showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,
+      });
+      this.carritoUpdated.emit({
+        carritoLength: this.carrito.length,
+        carrito: this.carrito,
+        precioFinal: this.precioFinal,
       });
     } else {
       if (libroRepetido.libro_cantidad >= 10) {
@@ -90,6 +104,10 @@ export class CarritoService {
       const indexLibro = this.carrito.indexOf(libro);
       this.carrito[indexLibro].libro_cantidad++;
       this.precioFinal += libro.libro_precio;
+      this.carritoUpdated.emit({
+        carrito: this.carrito,
+        precioFinal: this.precioFinal,
+      });
     }
   }
   decrementarCantidadCarrito(id: any) {
@@ -114,6 +132,10 @@ export class CarritoService {
       const indexLibro = this.carrito.indexOf(libro);
       this.carrito[indexLibro].libro_cantidad--;
       this.precioFinal -= libro.libro_precio;
+      this.carritoUpdated.emit({
+        carrito: this.carrito,
+        precioFinal: this.precioFinal,
+      });
     }
   }
   eliminarLibroCarrito(id: any) {
@@ -133,14 +155,27 @@ export class CarritoService {
         const indexLibro = this.carrito.indexOf(libro);
         this.carrito.splice(indexLibro, 1);
         this.precioFinal -= libro.libro_precio * libro.libro_cantidad;
+        this.carritoUpdated.emit({
+          carritoLength: this.carrito.length,
+          carrito: this.carrito,
+          precioFinal: this.precioFinal,
+        });
       }
     });
   }
   vaciarCarrito() {
     this.carrito != '' && ((this.carrito = []), (this.precioFinal = 0));
+    this.carritoUpdated.emit({
+      carritoLength: this.carrito.length,
+      carrito: this.carrito,
+      precioFinal: this.precioFinal,
+    });
   }
   ordenarCarrito() {
     this.carrito.sort((a: any, b: any) => a.libro_precio - b.libro_precio);
+    this.carritoUpdated.emit({
+      carrito: this.carrito,
+    });
   }
   enviarCarrito() {
     if (this.carrito.length != 0) {
@@ -184,5 +219,8 @@ export class CarritoService {
         background: '#FFFDD0',
       });
     }
+  }
+  getCarritoLength(): any {
+    return this.carrito.length;
   }
 }

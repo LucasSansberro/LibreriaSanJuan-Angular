@@ -9,5 +9,8 @@ import { CarritoService } from 'src/app/services/carrito.service';
 export class LibrosHomeComponent {
   @Input() libros: any;
 
-  constructor(public carritoService: CarritoService) {}
+  constructor(private carritoService: CarritoService) {}
+  agregarLibroCarrito(libro : any){
+    this.carritoService.agregarLibroCarrito(libro)
+  }
 }

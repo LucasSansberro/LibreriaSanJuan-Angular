@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { SesionService } from 'src/app/services/sesion.service';
 
@@ -7,8 +7,28 @@ import { SesionService } from 'src/app/services/sesion.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css'],
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
+  carritoLength: number = this.carritoService.getCarritoLength();
+  isAdmin: boolean = this.sesionService.getIsAdmin();
+  sesionCorreo: string = this.sesionService.getSesionCorreo();
 
-  constructor(public sesionService: SesionService, public carritoService : CarritoService) {
+  constructor(
+    private sesionService: SesionService,
+    private carritoService: CarritoService
+  ) {}
+
+  ngOnInit(): void {
+    this.carritoService.carritoUpdated.subscribe(
+      () => (this.carritoLength = this.carritoService.getCarritoLength())
+    );
+    this.sesionService.sesionUpdated.subscribe(
+      () => (
+        (this.isAdmin = this.sesionService.getIsAdmin()),
+        (this.sesionCorreo = this.sesionService.getSesionCorreo())
+      )
+    );
+  }
+  mostrarCarrito() {
+    this.carritoService.mostrarCarrito();
   }
 }

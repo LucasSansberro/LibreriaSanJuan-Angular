@@ -1,4 +1,4 @@
-<ng-container *ngIf="!sesionService.sesionIniciadaBoolean">
+<ng-container *ngIf="!sesionIniciadaBoolean">
   <div
     class="modal fade"
     id="loginModal"
@@ -79,7 +79,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="sesionService.sesionIniciadaBoolean">
+<ng-container *ngIf="sesionIniciadaBoolean">
   <div
     class="modal fade"
     id="loginModal"
@@ -90,7 +90,9 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cremaSuave">
         <div class="modal-header border-bottom-0">
-          <h2 class="ms-auto fw-bold " id="exampleModalLabel">Datos de sesión</h2>
+          <h2 class="ms-auto fw-bold" id="exampleModalLabel">
+            Datos de sesión
+          </h2>
           <button
             type="button"
             class="btn-close"
@@ -103,9 +105,9 @@
           <div class="d-flex flex-column text-center">
             <p>
               Sesión iniciada con
-              {{ sesionService.sesionIniciada.usuario_correo }}
+              {{ sesionIniciadaCorreo }}
             </p>
-            <button (click)="sesionService.cerrarSesion()" class="btn btn-danger my-3 p-3">
+            <button (click)="cerrarSesion()" class="btn btn-danger my-3 p-3">
               Cerrar sesión
             </button>
           </div>

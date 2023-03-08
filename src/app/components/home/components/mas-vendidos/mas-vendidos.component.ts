@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Libros } from 'src/app/models/Libros';
 
 @Component({
   selector: 'app-mas-vendidos',
@@ -6,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./mas-vendidos.component.css']
 })
 export class MasVendidosComponent {
- @Input() libros : any
+ @Input() libros : Array<Libros> = []
 }

@@ -4,18 +4,18 @@
       >Librería San Juan</a
     >
     <button
-      (click)="carritoService.mostrarCarrito()"
+      (click)="mostrarCarrito()"
       class="me-auto botonAbrirCarrito ps-md-4 mt-md-2 pb-1 border border-0"
     >
       <i class="bi bi-cart"></i
       ><span id="cantidadCarrito" class="cantidadCarrito">{{
-        carritoService.carrito.length
+        carritoLength
       }}</span>
     </button>
     <span
-      *ngIf="sesionService.isAdmin"
+      *ngIf="isAdmin"
       class="ps-md-5 mt-md-2 pb-1 text-white-50"
-      ><a class="me-3" href="/admin"><i class="bi bi-tools"></i></a
+      ><a class="me-3" routerLink="/admin"><i class="bi bi-tools"></i></a
     ></span>
     <button
       class="navbar-toggler"
@@ -37,7 +37,7 @@
         >
           <i class="bi bi-person-circle nav-link"></i>
           <p class="nav-link ms-2 ms-lg-0 me-auto" id="usuarioLogueado">
-            <span>{{ sesionService.sesionCorreo }}</span>
+            <span>{{ sesionCorreo }}</span>
           </p>
         </li>
         <li class="nav-item">

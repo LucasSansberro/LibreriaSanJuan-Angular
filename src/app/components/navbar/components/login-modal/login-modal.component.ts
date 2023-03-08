@@ -13,10 +13,12 @@ import Swal from 'sweetalert2';
 export class LoginModalComponent implements OnInit {
   registroUsuario!: FormGroup;
   inicioSesionUsuario!: FormGroup;
+  sesionIniciadaBoolean!: boolean
+  sesionIniciadaCorreo!: string
 
   constructor(
     private dataService: DataService,
-    public sesionService: SesionService
+    private sesionService: SesionService
   ) {}
 
   registrarUsuario() {
@@ -59,7 +61,9 @@ export class LoginModalComponent implements OnInit {
     });
     this.inicioSesionUsuario.reset();
   }
-
+  cerrarSesion(){
+    this.sesionService.cerrarSesion()
+  }
   ngOnInit(): void {
     Swal.showValidationMessage(''); //Carga de estilos de Swal para el form
 
@@ -71,6 +75,13 @@ export class LoginModalComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+
+    this.sesionService.sesionUpdated.subscribe(
+      () => (
+        (this.sesionIniciadaBoolean = this.sesionService.getSesionIniciadaBoolean()),
+        (this.sesionIniciadaCorreo = this.sesionService.getSesionIniciadaCorreo())
+      )
+    );
   }
 }
 
