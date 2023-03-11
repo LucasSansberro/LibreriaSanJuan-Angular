@@ -42,11 +42,11 @@ export class CarritoService {
   }
   agregarLibroCarrito(libro: Libros): Promise<SweetAlertResult<any>> {
     const libroRepetido = this.carrito.find(
-      (libroBuscado: Libros) => libroBuscado.libro_id == libro.libro_id
+      (libroBuscado: Libros) => libroBuscado.libroId == libro.libroId
     );
     if (libroRepetido == undefined) {
-      this.carrito.push({ ...libro, libro_cantidad: 1 });
-      this.precioFinal += libro.libro_precio;
+      this.carrito.push({ ...libro, libroCantidad: 1 });
+      this.precioFinal += libro.libroPrecio;
       this.carritoUpdated.emit({
         carritoLength: this.carrito.length,
         carrito: this.carrito,
@@ -67,14 +67,14 @@ export class CarritoService {
         timerProgressBar: true,
       });
     } else {
-      if (libroRepetido.libro_cantidad! >= 10) {
+      if (libroRepetido.libroCantidad! >= 10) {
         return Swal.fire({
           icon: 'error',
           html: `El máximo permitido es de 10 unidades por título. Para compras mayoristas, contáctenos a través de un correo electrónico`,
           background: '#FFFDD0',
         });
       } else {
-        this.incrementarCantidadCarrito(libroRepetido.libro_id);
+        this.incrementarCantidadCarrito(libroRepetido.libroId);
         return Swal.fire({
           toast: true,
           icon: 'success',
@@ -94,9 +94,9 @@ export class CarritoService {
   }
   incrementarCantidadCarrito(id: number): void {
     const libro = this.carrito.find(
-      (libroBuscado: Libros) => libroBuscado.libro_id == id
+      (libroBuscado: Libros) => libroBuscado.libroId == id
     );
-    if (libro!.libro_cantidad! >= 10) {
+    if (libro!.libroCantidad! >= 10) {
       Swal.fire({
         icon: 'error',
         html: `El máximo permitido es de 10 unidades por título. Para compras mayoristas, contáctenos a través de un correo electrónico`,
@@ -104,8 +104,8 @@ export class CarritoService {
       });
     } else {
       const indexLibro = this.carrito.indexOf(libro!);
-      this.carrito[indexLibro].libro_cantidad!++;
-      this.precioFinal += libro!.libro_precio;
+      this.carrito[indexLibro].libroCantidad!++;
+      this.precioFinal += libro!.libroPrecio;
       this.carritoUpdated.emit({
         carrito: this.carrito,
         precioFinal: this.precioFinal,
@@ -114,14 +114,14 @@ export class CarritoService {
   }
   decrementarCantidadCarrito(id: number): void {
     const libro = this.carrito.find(
-      (libroBuscado: Libros) => libroBuscado.libro_id == id
+      (libroBuscado: Libros) => libroBuscado.libroId == id
     );
-    if (libro!.libro_cantidad! <= 1) {
-      this.eliminarLibroCarrito(libro!.libro_id);
+    if (libro!.libroCantidad! <= 1) {
+      this.eliminarLibroCarrito(libro!.libroId);
     } else {
       const indexLibro = this.carrito.indexOf(libro!);
-      this.carrito[indexLibro].libro_cantidad!--;
-      this.precioFinal -= libro!.libro_precio;
+      this.carrito[indexLibro].libroCantidad!--;
+      this.precioFinal -= libro!.libroPrecio;
       this.carritoUpdated.emit({
         carrito: this.carrito,
         precioFinal: this.precioFinal,
@@ -130,12 +130,12 @@ export class CarritoService {
   }
   async eliminarLibroCarrito(id: number): Promise<void> {
     const libro = this.carrito.find(
-      (libroBuscado: Libros) => libroBuscado.libro_id == id
+      (libroBuscado: Libros) => libroBuscado.libroId == id
     );
     const result = await Swal.fire({
       showCloseButton: true,
       icon: 'question',
-      html: `¿Quiere eliminar a ${libro!.libro_titulo} de su carrito?`,
+      html: `¿Quiere eliminar a ${libro!.libroTitulo} de su carrito?`,
       confirmButtonText: 'Confirmar',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -144,7 +144,7 @@ export class CarritoService {
     if (result.isConfirmed) {
       const indexLibro = this.carrito.indexOf(libro!);
       this.carrito.splice(indexLibro, 1);
-      this.precioFinal -= libro!.libro_precio * libro!.libro_cantidad!;
+      this.precioFinal -= libro!.libroPrecio * libro!.libroCantidad!;
       this.carritoUpdated.emit({
         carritoLength: this.carrito.length,
         carrito: this.carrito,
@@ -161,7 +161,7 @@ export class CarritoService {
     });
   }
   ordenarCarrito(): void {
-    this.carrito.sort((a: any, b: any) => a.libro_precio - b.libro_precio);
+    this.carrito.sort((a: any, b: any) => a.libroPrecio - b.libroPrecio);
     this.carritoUpdated.emit({
       carrito: this.carrito,
     });
@@ -178,7 +178,7 @@ export class CarritoService {
         const result = await Swal.fire({
           showCloseButton: true,
           icon: 'question',
-          html: `Enviaremos la facturación y el método de pago al  correo que usted ha registrado: ${this.sesionService.sesionIniciada.usuario_correo}<br>¿Está de acuerdo?`,
+          html: `Enviaremos la facturación y el método de pago al  correo que usted ha registrado: ${this.sesionService.sesionIniciada.usuarioCorreo}<br>¿Está de acuerdo?`,
           confirmButtonText: 'Confirmar',
           showCancelButton: true,
           cancelButtonText: 'Cancelar',
@@ -186,7 +186,7 @@ export class CarritoService {
         });
         if (result.isConfirmed) {
           const factura = {
-            usuario_id: this.sesionService.sesionIniciada.usuario_id,
+            usuario_id: this.sesionService.sesionIniciada.usuarioId,
             precio_total: this.precioFinal,
             libros_comprados: [...this.carrito],
           };
@@ -195,7 +195,7 @@ export class CarritoService {
           this.ocultarCarrito();
           return Swal.fire({
             icon: 'success',
-            html: `La factura y los métodos de pago han sido enviados a ${this.sesionService.sesionIniciada.usuario_correo}`,
+            html: `La factura y los métodos de pago han sido enviados a ${this.sesionService.sesionIniciada.usuarioCorreo}`,
             background: '#FFFDD0',
           });
         }

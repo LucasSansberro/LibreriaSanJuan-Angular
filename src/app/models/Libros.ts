@@ -1,22 +1,22 @@
 export class Libros {
-  libro_id: number;
-  libro_precio: number;
-  libro_titulo: string;
-  libro_autor: string;
-  libro_portada: string;
-  libro_cantidad?:number
+  libroId: number;
+  libroPrecio: number;
+  libroTitulo: string;
+  libroAutor: string;
+  libroPortada: string;
+  libroCantidad?:number
 
   constructor(
-    libro_id: number,
-    libro_precio: number,
-    libro_titulo: string,
-    libro_autor: string,
-    libro_portada: string,
+    libroId: number,
+    libroPrecio: number,
+    libroTitulo: string,
+    libroAutor: string,
+    libroPortada: string,
   ) {
-    this.libro_id = libro_id;
-    this.libro_precio = libro_precio;
-    this.libro_titulo = libro_titulo;
-    this.libro_autor = libro_autor;
-    this.libro_portada = libro_portada;
+    this.libroId = libroId;
+    this.libroPrecio = libroPrecio;
+    this.libroTitulo = libroTitulo;
+    this.libroAutor = libroAutor;
+    this.libroPortada = libroPortada;
   }
 }

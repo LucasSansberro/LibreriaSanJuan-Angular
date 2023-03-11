@@ -10,13 +10,13 @@
         >
           <img
             class="card-img-top img-oferta mt-3"
-            src="{{ libro.libro_portada }}"
-            alt="Foto de {{ libro.libro_titulo }}"
+            src="{{ libro.libroPortada }}"
+            alt="Foto de {{ libro.libroTitulo }}"
           />
           <div class="card-body">
-            <h5 class="card-title fw-bold">{{ libro.libro_titulo }}</h5>
-            <p class="card-text">${{ libro.libro_precio + 100 }}</p>
-            <p class="card-text">${{ libro.libro_precio }}</p>
+            <h5 class="card-title fw-bold">{{ libro.libroTitulo }}</h5>
+            <p class="card-text">${{ libro.libroPrecio + 100 }}</p>
+            <p class="card-text">${{ libro.libroPrecio }}</p>
           </div>
           <button (click)="agregarLibroCarrito(libro)" class="btn text-light marron-medio border border-0">
             Comprar

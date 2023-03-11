@@ -14,7 +14,7 @@ export class DataService {
       'Content-Type': 'application/json',
     }),
   };
-  private URL = 'http://localhost:8080/apirest-1.0-SNAPSHOT/api';
+  private URL = 'http://localhost:8080/api';
   constructor(private http: HttpClient) {}
   getLibros(): Observable<Array<Libros>> {
     return this.http.get<Array<Libros>>(`${this.URL}/libros`);
@@ -26,17 +26,17 @@ export class DataService {
       this.httpOptions
     );
   }
-  updateLibro(libro: string): Observable<Libros> {
-    return this.http.put<Libros>(`${this.URL}/libros`, libro, this.httpOptions);
+  updateLibro(libro: string, id: number): Observable<Libros> {
+    return this.http.put<Libros>(
+      `${this.URL}/libros/${id}`,
+      libro,
+      this.httpOptions
+    );
   }
   deleteLibro(id: number): Observable<Libros> {
-    return this.http.delete<Libros>(`${this.URL}/libros`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      body: id,
-    });
+    return this.http.delete<Libros>(`${this.URL}/libros/${id}`);
   }
+
   getUsuarios(): Observable<Array<Usuarios>> {
     return this.http.get<Array<Usuarios>>(`${this.URL}/usuarios`);
   }
@@ -47,13 +47,15 @@ export class DataService {
       this.httpOptions
     );
   }
+  postLoginUser(user: string): Observable<Usuarios> {
+    return this.http.post<Usuarios>(
+      `${this.URL}/usuarios/login`,
+      user,
+      this.httpOptions
+    );
+  }
   deleteUser(id: number): Observable<Usuarios> {
-    return this.http.delete<Usuarios>(`${this.URL}/usuarios`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      body: id,
-    });
+    return this.http.delete<Usuarios>(`${this.URL}/usuarios/${id}`);
   }
   postFactura(factura: string): Observable<Facturas> {
     return this.http.post<Facturas>(

@@ -1,15 +1,18 @@
 export class Usuarios {
-  usuario_id: number;
-  usuario_correo: string;
-  usuario_clave: string;
+  usuarioId: number;
+  usuarioCorreo: string;
+  usuarioClave: string;
+  isAdmin: boolean;
 
   constructor(
-    usuario_id: number,
-    usuario_correo: string,
-    usuario_clave: string
+    usuarioId: number,
+    usuarioCorreo: string,
+    usuarioClave: string,
+    isAdmin: boolean
   ) {
-    this.usuario_id = usuario_id;
-    this.usuario_correo = usuario_correo;
-    this.usuario_clave = usuario_clave;
+    this.usuarioId = usuarioId;
+    this.usuarioCorreo = usuarioCorreo;
+    this.usuarioClave = usuarioClave;
+    this.isAdmin = isAdmin;
   }
 }

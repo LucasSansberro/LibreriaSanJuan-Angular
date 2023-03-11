@@ -9,12 +9,12 @@
         class="my-1 d-flex justify-content-between align-items-center border-dark border-bottom"
       >
         <p>
-          {{ usuario.usuario_correo }} || Admin
-          <!-- TODO  {{usuario.isAdmin == true ? "Admin" : "Usuario"}} -->
+          {{ usuario.usuarioCorreo }} ||
+          {{usuario.isAdmin ? "Admin" : "Usuario"}}
         </p>
         <button
           class="crema me-3"
-          (click)="eliminarUsuario(usuario.usuario_id, usuario.usuario_correo)"
+          (click)="eliminarUsuario(usuario.usuarioId, usuario.usuarioCorreo)"
         >
           <i class="bi bi-trash3-fill"></i>
         </button>
@@ -35,19 +35,19 @@
         class="my-1 d-flex justify-content-between align-items-center border-dark border-bottom"
       >
         <p>
-          {{ libro.libro_titulo }} || ${{ libro.libro_precio }} ||
-          {{ libro.libro_autor }}
+          {{ libro.libroTitulo }} || ${{ libro.libroPrecio }} ||
+          {{ libro.libroAutor }}
         </p>
         <div>
           <button
             class="crema me-3"
             (click)="
               editarLibro(
-                libro.libro_id,
-                libro.libro_titulo,
-                libro.libro_precio,
-                libro.libro_autor,
-                libro.libro_portada
+                libro.libroId,
+                libro.libroTitulo,
+                libro.libroPrecio,
+                libro.libroAutor,
+                libro.libroPortada
               )
             "
           >
@@ -55,7 +55,7 @@
           </button>
           <button
             class="crema me-3"
-            (click)="eliminarLibro(libro.libro_id, libro.libro_titulo)"
+            (click)="eliminarLibro(libro.libroId, libro.libroTitulo)"
           >
             <i class="bi bi-trash3-fill"></i>
           </button>

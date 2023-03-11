@@ -1,17 +1,17 @@
 import { Libros } from './Libros';
 
 export class Facturas {
-  usuario_id: number;
+  usuarioId: number;
   precioFinal: number;
-  libros_comprados: Array<Libros>;
+  librosComprados: Array<Libros>;
 
   constructor(
-    usuario_id: number,
+    usuarioId: number,
     precioFinal: number,
-    libros_comprados: Array<Libros>
+    librosComprados: Array<Libros>
   ) {
-    this.usuario_id = usuario_id;
+    this.usuarioId = usuarioId;
     this.precioFinal = precioFinal;
-    this.libros_comprados = libros_comprados;
+    this.librosComprados = librosComprados;
   }
 }

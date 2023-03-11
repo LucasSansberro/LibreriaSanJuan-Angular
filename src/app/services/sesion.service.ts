@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Usuarios } from '../models/Usuarios';
 
@@ -26,17 +25,17 @@ export class SesionService {
     return this.sesionIniciadaBoolean;
   }
   getSesionIniciadaCorreo(): string {
-    return this.sesionIniciada.usuario_correo;
+    return this.sesionIniciada.usuarioCorreo;
   }
 
   renderSesion(usuario: Usuarios): Promise<any> {
     this.sesionIniciada = usuario;
-    this.sesionCorreo = usuario.usuario_correo.substring(
+    this.sesionCorreo = usuario.usuarioCorreo.substring(
       0,
-      usuario.usuario_correo.indexOf('@')
+      usuario.usuarioCorreo.indexOf('@')
     );
     this.sesionIniciadaBoolean = true;
-    if (usuario.usuario_correo == 'admin@gmail.com') {
+    if (usuario.isAdmin) {
       this.isAdmin = true;
     }
     this.sesionUpdated.emit({
@@ -53,9 +52,10 @@ export class SesionService {
 
   cerrarSesion(): Promise<any> {
     this.sesionIniciada = {
-      usuario_id: 0,
-      usuario_correo: '',
-      usuario_clave: '',
+      usuarioId: 0,
+      usuarioCorreo: '',
+      usuarioClave: '',
+      isAdmin:false
     };
     this.sesionCorreo = 'Anónimo';
     this.sesionIniciadaBoolean = false;

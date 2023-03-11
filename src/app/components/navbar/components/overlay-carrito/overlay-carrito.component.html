@@ -8,26 +8,26 @@
               *ngFor="let libro of carrito"
               class="d-flex justify-content-between align-items-center mt-4"
             >
-              <p>{{ libro.libro_titulo }} <b>|</b> ${{ libro.libro_precio }}</p>
+              <p>{{ libro.libroTitulo }} <b>|</b> ${{ libro.libroPrecio }}</p>
               <div class="text-center d-flex align-items-center mb-3">
                 <button
                   class="btn px-1"
-                  (click)="decrementarCantidadCarrito(libro.libro_id)"
+                  (click)="decrementarCantidadCarrito(libro.libroId)"
                 >
                   <i class="bi bi-caret-left"></i>
                 </button>
                 <span class="border border-dark pb-1 px-2">
-                  {{ libro.libro_cantidad }}
+                  {{ libro.libroCantidad }}
                 </span>
                 <button
                   class="btn me-2 px-1"
-                  (click)="incrementarCantidadCarrito(libro.libro_id)"
+                  (click)="incrementarCantidadCarrito(libro.libroId)"
                 >
                   <i class="bi bi-caret-right"></i>
                 </button>
                 <button
                   class="botonEliminar crema"
-                  (click)="eliminarLibroCarrito(libro.libro_id)"
+                  (click)="eliminarLibroCarrito(libro.libroId)"
                 >
                   <i class="bi bi-trash3-fill"></i>
                 </button>

@@ -20,45 +20,43 @@ export class LoginModalComponent implements OnInit {
     private sesionService: SesionService
   ) {}
 
-  registrarUsuario(): void {
+  registrarUsuario(): any {
     const registroCorreo = this.registroUsuario.value.name;
     const registroPassword = this.registroUsuario.value.password;
 
-    this.dataService.getUsuarios().subscribe((data) => {
-      const usuarioRepetido = data.find(
-        (usuario: Usuarios) => usuario.usuario_correo == registroCorreo
-      );
-      usuarioRepetido == undefined
-        ? (this.dataService
-            .postUser(
-              JSON.stringify({
-                usuario_correo: registroCorreo,
-                usuario_clave: registroPassword,
-              })
-            )
-            .subscribe(),
-          this.sesionService.renderSesion(data[data.length - 1]),
-          document.getElementById('closeButton')?.click())
-        : console.log('Malísimo'); // TODO cambiar esto
-    });
+    this.dataService
+      .postUser(
+        JSON.stringify({
+          usuarioCorreo: registroCorreo,
+          usuarioClave: registroPassword,
+          isAdmin: false,
+        })
+      )
+      .subscribe({
+        next: (res) => this.sesionService.renderSesion(res),
+        error: () => console.log('Usuario repetido'),
+      }),
+      document.getElementById('closeButton')!.click();
     this.registroUsuario.reset();
   }
 
   iniciarSesion(): void {
     const sesionCorreo = this.inicioSesionUsuario.value.name;
     const sesionPassword = this.inicioSesionUsuario.value.password;
-    this.dataService.getUsuarios().subscribe((data) => {
-      const user: Usuarios[] = data.filter(
-        (usuario: Usuarios) =>
-          usuario.usuario_correo == sesionCorreo &&
-          usuario.usuario_clave == sesionPassword
-      );
-      user.length > 0
-        ? (this.sesionService.renderSesion(user[0]),
-          document.getElementById('closeButton')?.click())
-        : console.log('Malísimo');
-    });
-    this.inicioSesionUsuario.reset();
+
+    this.dataService
+      .postLoginUser(
+        JSON.stringify({
+          usuarioCorreo: sesionCorreo,
+          usuarioClave: sesionPassword,
+        })
+      )
+      .subscribe({
+        next: (res) => this.sesionService.renderSesion(res),
+        error: () => console.log('Usuario inexistente'),
+      }),
+      document.getElementById('closeButton')!.click();
+    this.registroUsuario.reset();
   }
 
   cerrarSesion(): void {
