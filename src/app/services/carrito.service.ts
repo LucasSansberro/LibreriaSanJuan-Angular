@@ -8,7 +8,6 @@ import { SesionService } from './sesion.service';
   providedIn: 'root',
 })
 export class CarritoService {
-  //TODO Queda como object? Podemos hacerlo mejor con un modelo de carrito?
   carritoUpdated: EventEmitter<object> = new EventEmitter();
 
   carrito: Array<Libros> = [];

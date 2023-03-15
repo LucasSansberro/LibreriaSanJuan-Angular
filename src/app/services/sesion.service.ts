@@ -35,7 +35,7 @@ export class SesionService {
       usuario.usuarioCorreo.indexOf('@')
     );
     this.sesionIniciadaBoolean = true;
-    if (usuario.isAdmin) {
+    if (usuario.admin) {
       this.isAdmin = true;
     }
     this.sesionUpdated.emit({
@@ -54,8 +54,7 @@ export class SesionService {
     this.sesionIniciada = {
       usuarioId: 0,
       usuarioCorreo: '',
-      usuarioClave: '',
-      isAdmin:false
+      admin:false
     };
     this.sesionCorreo = 'Anónimo';
     this.sesionIniciadaBoolean = false;
@@ -73,3 +72,5 @@ export class SesionService {
     });
   }
 }
+
+//TODO Agregar private a todos los atributos de los servicios
