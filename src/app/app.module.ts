@@ -17,9 +17,15 @@ import { LibrosHomeComponent } from './components/home/components/libros-home/li
 import { NavComponent } from './components/navbar/components/nav/nav.component';
 import { OverlayCarritoComponent } from './components/navbar/components/overlay-carrito/overlay-carrito.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginModalComponent } from './components/navbar/components/login-modal/login-modal.component';
+import { LoginModalComponent } from './components/navbar/components/login-modal-container/login-modal.component';
 import { SesionService } from './services/sesion.service';
 import { CarritoService } from './services/carrito.service';
+import { LoginRegisterModalComponent } from './components/navbar/components/login-register-modal/login-register-modal.component';
+import { LogoutModalComponent } from './components/navbar/components/logout-modal/logout-modal.component';
+import { RegisterFormComponent } from './components/navbar/components/register-form/register-form.component';
+import { LoginFormComponent } from './components/navbar/components/login-form/login-form.component';
+import { AdminUsersContainerComponent } from './components/admin/components/admin-users-container/admin-users-container.component';
+import { AdminLibrosContainerComponent } from './components/admin/components/admin-libros-container/admin-libros-container.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,12 @@ import { CarritoService } from './services/carrito.service';
     NavComponent,
     OverlayCarritoComponent,
     LoginModalComponent,
+    LoginRegisterModalComponent,
+    LogoutModalComponent,
+    RegisterFormComponent,
+    LoginFormComponent,
+    AdminUsersContainerComponent,
+    AdminLibrosContainerComponent,
   ],
   imports: [
     BrowserModule,
