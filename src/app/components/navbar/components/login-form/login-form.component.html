@@ -1,0 +1,22 @@
+<form novalidate [formGroup]="inicioSesionUsuario" (ngSubmit)="iniciarSesion()">
+  <h3>Iniciar sesión</h3>
+  <input
+    type="text"
+    class="swal2-input"
+    placeholder="Correo electrónico"
+    formControlName="name"
+  />
+  <input
+    type="password"
+    class="swal2-input"
+    placeholder="Contraseña"
+    formControlName="password"
+  />
+  <button
+    class="btn btn-primary d-block mt-4 mx-auto"
+    type="submit"
+    [disabled]="inicioSesionUsuario.invalid"
+  >
+    Iniciar sesión
+  </button>
+</form>

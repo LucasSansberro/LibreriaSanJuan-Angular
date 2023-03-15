@@ -1,0 +1,41 @@
+<div class="container madera mt-5 pb-3 mb-4">
+  <h2 class="text-center py-3">Libros</h2>
+  <button class="crema mx-auto d-block py-2 w-50 mb-3" (click)="agregarLibro()">
+    Agregar libro
+  </button>
+  <ul class="crema d-flex flex-column justify-content-between">
+    <ng-container *ngIf="libros">
+      <li
+        *ngFor="let libro of libros"
+        class="my-1 d-flex justify-content-between align-items-center border-dark border-bottom"
+      >
+        <p>
+          {{ libro.libroTitulo }} || ${{ libro.libroPrecio }} ||
+          {{ libro.libroAutor }}
+        </p>
+        <div>
+          <button
+            class="crema me-3"
+            (click)="
+              editarLibro(
+                libro.libroId,
+                libro.libroTitulo,
+                libro.libroPrecio,
+                libro.libroAutor,
+                libro.libroPortada
+              )
+            "
+          >
+            <i class="bi bi-pencil-square p-1"></i>
+          </button>
+          <button
+            class="crema me-3"
+            (click)="eliminarLibro(libro.libroId, libro.libroTitulo)"
+          >
+            <i class="bi bi-trash3-fill"></i>
+          </button>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>

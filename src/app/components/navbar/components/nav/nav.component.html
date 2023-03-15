@@ -8,7 +8,7 @@
       class="me-auto botonAbrirCarrito ps-md-4 mt-md-2 pb-1 border border-0"
     >
       <i class="bi bi-cart"></i
-      ><span id="cantidadCarrito" class="cantidadCarrito">{{
+      ><span class="cantidadCarrito">{{
         carritoLength
       }}</span>
     </button>
@@ -36,7 +36,7 @@
           data-bs-target="#loginModal"
         >
           <i class="bi bi-person-circle nav-link"></i>
-          <p class="nav-link ms-2 ms-lg-0 me-auto" id="usuarioLogueado">
+          <p class="nav-link ms-2 ms-lg-0 me-auto">
             <span>{{ sesionCorreo }}</span>
           </p>
         </li>
@@ -53,5 +53,3 @@
     </div>
   </div>
 </nav>
-
-<app-login-modal></app-login-modal>

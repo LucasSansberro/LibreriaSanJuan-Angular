@@ -5,7 +5,6 @@ import { SesionService } from 'src/app/services/sesion.service';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
   carritoLength: number = this.carritoService.getCarritoLength();

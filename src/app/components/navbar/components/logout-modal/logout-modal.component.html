@@ -1,0 +1,35 @@
+<div
+    class="modal fade"
+    id="loginModal"
+    tabindex="-1"
+    aria-labelledby="loginModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cremaSuave">
+        <div class="modal-header border-bottom-0">
+          <h2 class="ms-auto fw-bold" id="exampleModalLabel">
+            Datos de sesión
+          </h2>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="closeButton"
+          ></button>
+        </div>
+        <div class="modal-body p-5">
+          <div class="d-flex flex-column text-center">
+            <p>
+              Sesión iniciada con
+              {{ correo }}
+            </p>
+            <button (click)="cerrarSesion()" class="btn btn-danger my-3 p-3">
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,22 @@
+<form novalidate [formGroup]="registroUsuario" (ngSubmit)="registrarUsuario()">
+  <h3>Registrarse</h3>
+  <input
+    type="text"
+    class="swal2-input"
+    placeholder="Correo electrónico"
+    formControlName="name"
+  />
+  <input
+    type="password"
+    class="swal2-input"
+    placeholder="Contraseña"
+    formControlName="password"
+  />
+  <button
+    class="btn btn-primary d-block mt-4 mx-auto"
+    type="submit"
+    [disabled]="registroUsuario.invalid"
+  >
+    Registrarse
+  </button>
+</form>

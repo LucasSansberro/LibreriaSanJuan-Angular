@@ -1,0 +1,7 @@
+<ng-container *ngIf="!sesionIniciadaBoolean">
+  <app-login-register-modal></app-login-register-modal>
+</ng-container>
+
+<ng-container *ngIf="sesionIniciadaBoolean">
+  <app-logout-modal [correo]="sesionIniciadaCorreo"></app-logout-modal>
+</ng-container>
