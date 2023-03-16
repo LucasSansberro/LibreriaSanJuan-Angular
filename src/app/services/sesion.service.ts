@@ -9,10 +9,10 @@ import { AlertasService } from './alertas.service';
 export class SesionService {
   sesionUpdated: EventEmitter<object> = new EventEmitter();
 
-  sesionIniciadaBoolean: boolean = false;
-  sesionIniciada!: Usuarios;
-  sesionCorreo: string = 'Anónimo';
-  isAdmin: boolean = false;
+  private sesionIniciadaBoolean: boolean = false;
+  private sesionIniciada!: Usuarios;
+  private sesionCorreo: string = 'Anónimo';
+  private isAdmin: boolean = false;
 
   constructor(private alertaService: AlertasService) {}
 
@@ -27,6 +27,9 @@ export class SesionService {
   }
   getSesionIniciadaCorreo(): string {
     return this.sesionIniciada.usuarioCorreo;
+  }
+  getSesionIniciadaId(): number {
+    return this.sesionIniciada.usuarioId;
   }
 
   renderSesion(usuario: Usuarios): void {

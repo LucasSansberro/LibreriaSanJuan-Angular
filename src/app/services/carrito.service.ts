@@ -141,7 +141,7 @@ export class CarritoService {
   }
   async enviarCarrito(): Promise<any> {
     if (this.carrito.length != 0) {
-      if (!this.sesionService.sesionIniciadaBoolean) {
+      if (!this.sesionService.getSesionIniciadaBoolean()) {
         return this.alertaSimple(
           'error',
           'Debe inciar sesion para realizar una compra'
@@ -150,7 +150,7 @@ export class CarritoService {
         const result = await Swal.fire({
           showCloseButton: true,
           icon: 'question',
-          html: `Enviaremos la facturación y el método de pago al  correo que usted ha registrado: ${this.sesionService.sesionIniciada.usuarioCorreo}<br>¿Está de acuerdo?`,
+          html: `Enviaremos la facturación y el método de pago al  correo que usted ha registrado: ${this.sesionService.getSesionIniciadaCorreo()}<br>¿Está de acuerdo?`,
           confirmButtonText: 'Confirmar',
           showCancelButton: true,
           cancelButtonText: 'Cancelar',
@@ -158,7 +158,7 @@ export class CarritoService {
         });
         if (result.isConfirmed) {
           const factura = {
-            usuario_id: this.sesionService.sesionIniciada.usuarioId,
+            usuario_id: this.sesionService.getSesionIniciadaId(),
             precio_total: this.precioFinal,
             libros_comprados: [...this.carrito],
           };
@@ -167,7 +167,7 @@ export class CarritoService {
           this.ocultarCarrito();
           return this.alertaSimple(
             'success',
-            `La factura y los métodos de pago han sido enviados a ${this.sesionService.sesionIniciada.usuarioCorreo}`
+            `La factura y los métodos de pago han sido enviados a ${this.sesionService.getSesionIniciadaCorreo()}`
           );
         }
       }
