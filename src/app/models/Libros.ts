@@ -4,7 +4,8 @@ export class Libros {
   libroTitulo: string;
   libroAutor: string;
   libroPortada: string;
-  libroCantidad?:number
+  libroCantidad?:number;
+  descuento?:boolean;
 
   constructor(
     libroId: number,

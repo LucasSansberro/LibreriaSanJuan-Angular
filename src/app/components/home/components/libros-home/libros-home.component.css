@@ -7,3 +7,7 @@
 #libros button:hover {
   background-color: #bb8955;
 }
+
+.precioTachado {
+  text-decoration: line-through;
+}

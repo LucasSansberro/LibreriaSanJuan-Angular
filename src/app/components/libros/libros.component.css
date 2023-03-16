@@ -7,9 +7,11 @@
 #libros button:hover {
   background-color: #bb8955;
 }
-
+.precioTachado {
+  text-decoration: line-through;
+}
 @media only screen and (max-width: 750px) {
   .img-oferta {
-      height: 300px;
-    }
+    height: 300px;
+  }
 }

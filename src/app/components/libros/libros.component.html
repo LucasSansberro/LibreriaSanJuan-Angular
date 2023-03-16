@@ -17,6 +17,7 @@
         />
         <div class="card-body d-flex flex-column justify-content-around">
           <h5 class="card-title fw-bold">{{ libro.libroTitulo }}</h5>
+          <p class="card-text precioTachado" *ngIf="libro.descuento">${{ libro.libroPrecio + 100 }}</p>
           <p class="card-text">${{ libro.libroPrecio }}</p>
         </div>
         <button

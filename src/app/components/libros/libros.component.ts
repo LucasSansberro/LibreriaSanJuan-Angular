@@ -10,6 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class LibrosComponent {
   libros: Array<Libros> = [];
+  librosMasVendidos: Array<Libros> = [];
   constructor(
     private dataService: DataService,
     private carritoService: CarritoService
@@ -19,6 +20,28 @@ export class LibrosComponent {
     this.carritoService.agregarLibroCarrito(libro);
   }
   ngOnInit(): void {
-    this.dataService.getLibros().subscribe((data) => (this.libros = data));
+    this.dataService.getLibros().subscribe(
+      (data) => (
+        (this.libros = data),
+        //Para aplicar el descuento, traemos por fetch el array de libros más vendidos
+        this.dataService.getLibrosMasVendidos().subscribe(
+          (data) => (
+            (this.librosMasVendidos = data),
+            //Comparamos los array para encontrar los items con mismo título
+            this.librosMasVendidos.forEach((libro) => {
+              const librosVendidos = this.libros.find(
+                (libroBuscado) => libroBuscado.libroTitulo == libro.libroTitulo
+              );
+              //Una vez encontrada la coincidencia, utilizamos su posición en el array para reemplazar algunos de sus valores para aplicar el descuento
+              this.libros[this.libros.indexOf(librosVendidos!)] = {
+                ...this.libros[this.libros.indexOf(librosVendidos!)],
+                libroPrecio: libro.libroPrecio,
+                descuento: true,
+              };
+            })
+          )
+        )
+      )
+    );
   }
 }

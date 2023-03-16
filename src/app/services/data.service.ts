@@ -19,6 +19,9 @@ export class DataService {
   getLibros(): Observable<Array<Libros>> {
     return this.http.get<Array<Libros>>(`${this.URL}/libros`);
   }
+  getLibrosMasVendidos(): Observable<Array<Libros>> {
+    return this.http.get<Array<Libros>>(`${this.URL}/librosMasVendidos`);
+  }
   postLibro(libro: string): Observable<Libros> {
     return this.http.post<Libros>(
       `${this.URL}/libros`,

@@ -12,8 +12,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService
-      .getLibros()
-      .subscribe((data) => (this.libros = data.slice(0, 3)));
+      .getLibrosMasVendidos()
+      .subscribe((data) => (this.libros = data));
   }
 }
-//TODO Hacer el sort según ventas en el back, con join

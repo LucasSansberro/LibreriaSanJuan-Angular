@@ -158,9 +158,9 @@ export class CarritoService {
         });
         if (result.isConfirmed) {
           const factura = {
-            usuario_id: this.sesionService.getSesionIniciadaId(),
-            precio_total: this.precioFinal,
-            libros_comprados: [...this.carrito],
+            usuarioId: this.sesionService.getSesionIniciadaId(),
+            precioTotal: this.precioFinal,
+            librosComprados: [...this.carrito],
           };
           this.dataService.postFactura(JSON.stringify(factura)).subscribe();
           this.vaciarCarrito();

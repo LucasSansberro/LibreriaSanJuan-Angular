@@ -15,7 +15,7 @@
           />
           <div class="card-body">
             <h5 class="card-title fw-bold">{{ libro.libroTitulo }}</h5>
-            <p class="card-text">${{ libro.libroPrecio + 100 }}</p>
+            <p class="card-text precioTachado">${{ libro.libroPrecio + 100 }}</p>
             <p class="card-text">${{ libro.libroPrecio }}</p>
           </div>
           <button (click)="agregarLibroCarrito(libro)" class="btn text-light marron-medio border border-0">
