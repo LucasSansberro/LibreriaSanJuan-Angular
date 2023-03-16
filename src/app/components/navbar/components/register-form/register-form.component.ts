@@ -55,4 +55,3 @@ export class RegisterFormComponent implements OnInit {
     });
   }
 }
-//TODO Agregar verificación de email (Puede ser regex)
