@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertasService } from 'src/app/services/alertas.service';
 import { DataService } from 'src/app/services/data.service';
 import { SesionService } from 'src/app/services/sesion.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-register-form',
@@ -12,7 +13,8 @@ export class RegisterFormComponent implements OnInit {
   registroUsuario!: FormGroup;
   constructor(
     private dataService: DataService,
-    private sesionService: SesionService
+    private sesionService: SesionService,
+    private alertasService: AlertasService
   ) {}
   registrarUsuario(): void {
     const registroCorreo = this.registroUsuario.value.name;
@@ -32,14 +34,20 @@ export class RegisterFormComponent implements OnInit {
           document.getElementById('closeButton')!.click(),
           this.registroUsuario.reset()
         ),
-        error: (e) =>
-          Swal.fire({
-            icon: 'error',
-            html: e.error,
-            background: '#FFFDD0',
-          }),
+        error: (e) => {
+          if (e.status == 400) {
+            this.alertaSimple('error', e.error);
+          } else if ((e.status = 400)) {
+            this.alertaSimple('error', e.error.message);
+          }
+        },
       });
   }
+
+  alertaSimple(icon: SweetAlertIcon, text: string) {
+    this.alertasService.alertaSimple(icon, text);
+  }
+
   ngOnInit(): void {
     this.registroUsuario = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -47,4 +55,4 @@ export class RegisterFormComponent implements OnInit {
     });
   }
 }
-//TODO Agregar verificación de email en el back y en el front (Puede ser regex)
+//TODO Agregar verificación de email (Puede ser regex)

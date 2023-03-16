@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
 import { Libros } from '../models/Libros';
+import { AlertasService } from './alertas.service';
 import { DataService } from './data.service';
 import { SesionService } from './sesion.service';
 
@@ -15,7 +16,8 @@ export class CarritoService {
 
   constructor(
     private sesionService: SesionService,
-    private dataService: DataService
+    private dataService: DataService,
+    private alertaService: AlertasService
   ) {}
 
   getCarrito(): Array<Libros> {
@@ -39,7 +41,7 @@ export class CarritoService {
       .getElementById('cuadroScripts')!
       .classList.remove('mostrarCarrito');
   }
-  agregarLibroCarrito(libro: Libros): Promise<SweetAlertResult<any>> {
+  agregarLibroCarrito(libro: Libros): void {
     const libroRepetido = this.carrito.find(
       (libroBuscado: Libros) => libroBuscado.libroId == libro.libroId
     );
@@ -51,43 +53,16 @@ export class CarritoService {
         carrito: this.carrito,
         precioFinal: this.precioFinal,
       });
-      return Swal.fire({
-        toast: true,
-        icon: 'success',
-        title: 'Libro agregado',
-        position: 'top-right',
-        iconColor: 'green',
-        background: '#FFFDD0',
-        customClass: {
-          popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-      });
+      return this.alertaToast('success', 'Libro agregado');
     } else {
       if (libroRepetido.libroCantidad! >= 10) {
-        return Swal.fire({
-          icon: 'error',
-          html: `El máximo permitido es de 10 unidades por título. Para compras mayoristas, contáctenos a través de un correo electrónico`,
-          background: '#FFFDD0',
-        });
+        return this.alertaSimple(
+          'error',
+          'El máximo permitido es de 10 unidades por título. Para compras mayoristas, contáctenos a través de un correo electrónico'
+        );
       } else {
         this.incrementarCantidadCarrito(libroRepetido.libroId);
-        return Swal.fire({
-          toast: true,
-          icon: 'success',
-          title: 'Libro agregado',
-          position: 'top-right',
-          iconColor: 'green',
-          background: '#FFFDD0',
-          customClass: {
-            popup: 'colored-toast',
-          },
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        });
+        return this.alertaToast('success', 'Libro agregado');
       }
     }
   }
@@ -96,11 +71,10 @@ export class CarritoService {
       (libroBuscado: Libros) => libroBuscado.libroId == id
     );
     if (libro!.libroCantidad! >= 10) {
-      Swal.fire({
-        icon: 'error',
-        html: `El máximo permitido es de 10 unidades por título. Para compras mayoristas, contáctenos a través de un correo electrónico`,
-        background: '#FFFDD0',
-      });
+      return this.alertaSimple(
+        'error',
+        'El máximo permitido es de 10 unidades por título. Para compras mayoristas, contáctenos a través de un correo electrónico'
+      );
     } else {
       const indexLibro = this.carrito.indexOf(libro!);
       this.carrito[indexLibro].libroCantidad!++;
@@ -168,11 +142,10 @@ export class CarritoService {
   async enviarCarrito(): Promise<any> {
     if (this.carrito.length != 0) {
       if (!this.sesionService.sesionIniciadaBoolean) {
-        return Swal.fire({
-          icon: 'error',
-          html: `Debe inciar sesion para realizar una compra`,
-          background: '#FFFDD0',
-        });
+        return this.alertaSimple(
+          'error',
+          'Debe inciar sesion para realizar una compra'
+        );
       } else {
         const result = await Swal.fire({
           showCloseButton: true,
@@ -192,22 +165,23 @@ export class CarritoService {
           this.dataService.postFactura(JSON.stringify(factura)).subscribe();
           this.vaciarCarrito();
           this.ocultarCarrito();
-          return Swal.fire({
-            icon: 'success',
-            html: `La factura y los métodos de pago han sido enviados a ${this.sesionService.sesionIniciada.usuarioCorreo}`,
-            background: '#FFFDD0',
-          });
+          return this.alertaSimple(
+            'success',
+            `La factura y los métodos de pago han sido enviados a ${this.sesionService.sesionIniciada.usuarioCorreo}`
+          );
         }
       }
     } else {
-      return Swal.fire({
-        icon: 'error',
-        html: `Su carrito está vacío`,
-        background: '#FFFDD0',
-      });
+      return this.alertaSimple('error', 'Su carrito está vacío');
     }
   }
   getCarritoLength(): number {
     return this.carrito.length;
+  }
+  alertaSimple(icon: SweetAlertIcon, text: string): void {
+    this.alertaService.alertaSimple(icon, text);
+  }
+  alertaToast(icon: SweetAlertIcon, text: string): void {
+    this.alertaService.alertaToast(icon, text);
   }
 }

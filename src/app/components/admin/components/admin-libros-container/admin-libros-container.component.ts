@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Libros } from 'src/app/models/Libros';
+import { AlertasService } from 'src/app/services/alertas.service';
 import { DataService } from 'src/app/services/data.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-libros-container',
@@ -9,7 +10,10 @@ import Swal from 'sweetalert2';
 })
 export class AdminLibrosContainerComponent {
   libros: Array<Libros> = [];
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private alertaService: AlertasService
+  ) {}
 
   async editarLibro(
     id: number,
@@ -71,18 +75,13 @@ export class AdminLibrosContainerComponent {
             );
             this.libros[this.libros.indexOf(libroEditado!)] = res;
           },
-          error: (err) =>
-            Swal.fire({
-              icon: 'error',
-              html: err.error,
-              background: '#FFFDD0',
-            }),
+          error: (e) => this.alertaSimple('error', e.error),
         });
     }
   }
 
   async agregarLibro(): Promise<void> {
-    const result = await Swal.fire({
+    const result: any = await Swal.fire({
       title: 'Agregar libro',
       html: `
       <div class="d-flex flex-column justify-content-around">
@@ -127,12 +126,7 @@ export class AdminLibrosContainerComponent {
       };
       this.dataService.postLibro(JSON.stringify(nuevoLibro)).subscribe({
         next: (res) => this.libros.push(res),
-        error: (err) =>
-          Swal.fire({
-            icon: 'error',
-            html: err.error,
-            background: '#FFFDD0',
-          }),
+        error: (e) => this.alertaSimple('error', e.error),
       });
     }
   }
@@ -155,6 +149,9 @@ export class AdminLibrosContainerComponent {
     }
   }
 
+  alertaSimple(icon: SweetAlertIcon, text: string) {
+    this.alertaService.alertaSimple(icon, text);
+  }
   ngOnInit(): void {
     this.dataService.getLibros().subscribe((data) => (this.libros = data));
   }

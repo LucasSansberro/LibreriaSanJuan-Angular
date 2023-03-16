@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Usuarios } from '../models/Usuarios';
+import { AlertasService } from './alertas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class SesionService {
   sesionCorreo: string = 'Anónimo';
   isAdmin: boolean = false;
 
-  constructor() {}
+  constructor(private alertaService: AlertasService) {}
 
   getSesionCorreo(): string {
     return this.sesionCorreo;
@@ -28,7 +29,7 @@ export class SesionService {
     return this.sesionIniciada.usuarioCorreo;
   }
 
-  renderSesion(usuario: Usuarios): Promise<any> {
+  renderSesion(usuario: Usuarios): void {
     this.sesionIniciada = usuario;
     this.sesionCorreo = usuario.usuarioCorreo.substring(
       0,
@@ -43,18 +44,14 @@ export class SesionService {
       isAdmin: this.isAdmin,
       sesionIniciada: this.sesionIniciada,
     });
-    return Swal.fire({
-      icon: 'success',
-      html: `Bienvenido ${this.sesionCorreo}`,
-      background: '#FFFDD0',
-    });
+    return this.alertaSimple('success', `Bienvenido ${this.sesionCorreo}`);
   }
 
-  cerrarSesion(): Promise<any> {
+  cerrarSesion(): void {
     this.sesionIniciada = {
       usuarioId: 0,
       usuarioCorreo: '',
-      admin:false
+      admin: false,
     };
     this.sesionCorreo = 'Anónimo';
     this.sesionIniciadaBoolean = false;
@@ -65,11 +62,11 @@ export class SesionService {
       sesionIniciada: this.sesionIniciada,
     });
     document.getElementById('closeButton')?.click();
-    return Swal.fire({
-      icon: 'success',
-      html: `Sesion cerrada`,
-      background: '#FFFDD0',
-    });
+    return this.alertaSimple('success', 'Sesión cerrada');
+  }
+
+  alertaSimple(icon: SweetAlertIcon, text: string): void {
+    this.alertaService.alertaSimple(icon, text);
   }
 }
 

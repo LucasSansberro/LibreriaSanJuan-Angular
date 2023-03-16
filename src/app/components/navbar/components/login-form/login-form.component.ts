@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AlertasService } from 'src/app/services/alertas.service';
 import { DataService } from 'src/app/services/data.service';
 import { SesionService } from 'src/app/services/sesion.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-login-form',
@@ -13,7 +14,8 @@ export class LoginFormComponent {
 
   constructor(
     private dataService: DataService,
-    private sesionService: SesionService
+    private sesionService: SesionService,
+    private alertaService: AlertasService
   ) {}
 
   iniciarSesion(): void {
@@ -33,13 +35,12 @@ export class LoginFormComponent {
           document.getElementById('closeButton')!.click(),
           this.inicioSesionUsuario.reset()
         ),
-        error: (e) =>
-          Swal.fire({
-            icon: 'error',
-            html: e.error.message,
-            background: '#FFFDD0',
-          }),
+        error: (e) => this.alertaSimple('error', e.error.message),
       });
+  }
+
+  alertaSimple(icon: SweetAlertIcon, text: string) {
+    this.alertaService.alertaSimple(icon, text);
   }
 
   ngOnInit(): void {
@@ -49,5 +50,3 @@ export class LoginFormComponent {
     });
   }
 }
-
-//TODO Hacer servicio de sweet alert, alerta simple

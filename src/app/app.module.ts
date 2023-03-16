@@ -26,6 +26,7 @@ import { RegisterFormComponent } from './components/navbar/components/register-f
 import { LoginFormComponent } from './components/navbar/components/login-form/login-form.component';
 import { AdminUsersContainerComponent } from './components/admin/components/admin-users-container/admin-users-container.component';
 import { AdminLibrosContainerComponent } from './components/admin/components/admin-libros-container/admin-libros-container.component';
+import { AlertasService } from './services/alertas.service';
 
 @NgModule({
   declarations: [
@@ -54,9 +55,9 @@ import { AdminLibrosContainerComponent } from './components/admin/components/adm
     BrowserAnimationsModule,
     SweetAlert2Module.forRoot(),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [DataService, SesionService, CarritoService],
+  providers: [DataService, SesionService, CarritoService, AlertasService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
