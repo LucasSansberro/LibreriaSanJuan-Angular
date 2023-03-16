@@ -72,5 +72,3 @@ export class SesionService {
     this.alertaService.alertaSimple(icon, text);
   }
 }
-
-//TODO Agregar private a todos los atributos de los servicios
