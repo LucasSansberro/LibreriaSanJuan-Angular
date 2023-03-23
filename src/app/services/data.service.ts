@@ -22,6 +22,7 @@ export class DataService {
   getLibrosMasVendidos(): Observable<Array<Libros>> {
     return this.http.get<Array<Libros>>(`${this.URL}/librosMasVendidos`);
   }
+  //TODO Podemos lograr que se renderice dinámicamente luego de hacer una compra?
   postLibro(libro: string): Observable<Libros> {
     return this.http.post<Libros>(
       `${this.URL}/libros`,

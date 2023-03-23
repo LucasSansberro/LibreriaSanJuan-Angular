@@ -35,7 +35,7 @@ export class LoginFormComponent {
           document.getElementById('closeButton')!.click(),
           this.inicioSesionUsuario.reset()
         ),
-        error: (e) => this.alertaSimple('error', e.error.message),
+        error: (e) => this.alertaSimple('error', e.error),
       });
   }
 

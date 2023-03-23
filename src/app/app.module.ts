@@ -16,7 +16,7 @@ import { DataService } from './services/data.service';
 import { LibrosHomeComponent } from './components/home/components/libros-home/libros-home.component';
 import { NavComponent } from './components/navbar/components/nav/nav.component';
 import { OverlayCarritoComponent } from './components/navbar/components/overlay-carrito/overlay-carrito.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginModalComponent } from './components/navbar/components/login-modal-container/login-modal.component';
 import { SesionService } from './services/sesion.service';
 import { CarritoService } from './services/carrito.service';
@@ -56,6 +56,7 @@ import { AlertasService } from './services/alertas.service';
     SweetAlert2Module.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [DataService, SesionService, CarritoService, AlertasService],
   bootstrap: [AppComponent],

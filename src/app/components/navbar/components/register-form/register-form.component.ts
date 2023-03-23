@@ -35,11 +35,7 @@ export class RegisterFormComponent implements OnInit {
           this.registroUsuario.reset()
         ),
         error: (e) => {
-          if (e.status == 400) {
             this.alertaSimple('error', e.error);
-          } else if ((e.status = 400)) {
-            this.alertaSimple('error', e.error.message);
-          }
         },
       });
   }
