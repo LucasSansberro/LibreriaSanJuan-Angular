@@ -8,7 +8,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 })
 export class OverlayCarritoComponent implements OnInit {
   carrito!: Array<Libros>;
-  precioFinal!: number;
+  precioFinal: number = 0
 
   constructor(private carritoService: CarritoService) {}
   ngOnInit(): void {

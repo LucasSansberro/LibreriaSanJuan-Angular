@@ -19,7 +19,7 @@ export class LibrosComponent {
   agregarLibroCarrito(libro: Libros) {
     this.carritoService.agregarLibroCarrito(libro);
   }
-  ngOnInit(): void {
+  renderizarLibrosConDescuento(): void {
     this.dataService.getLibros().subscribe(
       (data) => (
         (this.libros = data),
@@ -42,6 +42,13 @@ export class LibrosComponent {
           )
         )
       )
+    );
+  }
+
+  ngOnInit(): void {
+    this.renderizarLibrosConDescuento();
+    this.carritoService.facturaRealizada.subscribe(() =>
+      this.renderizarLibrosConDescuento()
     );
   }
 }

@@ -7,7 +7,7 @@ import { AlertasService } from './alertas.service';
   providedIn: 'root',
 })
 export class SesionService {
-  sesionUpdated: EventEmitter<object> = new EventEmitter();
+  sesionUpdated: EventEmitter<void> = new EventEmitter();
 
   private sesionIniciadaBoolean: boolean = false;
   private sesionIniciada!: Usuarios;
@@ -42,11 +42,7 @@ export class SesionService {
     if (usuario.admin) {
       this.isAdmin = true;
     }
-    this.sesionUpdated.emit({
-      sesionCorreo: this.sesionCorreo,
-      isAdmin: this.isAdmin,
-      sesionIniciada: this.sesionIniciada,
-    });
+    this.sesionUpdated.emit();
     return this.alertaSimple('success', `Bienvenido ${this.sesionCorreo}`);
   }
 
@@ -59,11 +55,7 @@ export class SesionService {
     this.sesionCorreo = 'Anónimo';
     this.sesionIniciadaBoolean = false;
     this.isAdmin = false;
-    this.sesionUpdated.emit({
-      sesionCorreo: this.sesionCorreo,
-      isAdmin: this.isAdmin,
-      sesionIniciada: this.sesionIniciada,
-    });
+    this.sesionUpdated.emit();
     document.getElementById('closeButton')?.click();
     return this.alertaSimple('success', 'Sesión cerrada');
   }

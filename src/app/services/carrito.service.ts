@@ -9,7 +9,8 @@ import { SesionService } from './sesion.service';
   providedIn: 'root',
 })
 export class CarritoService {
-  carritoUpdated: EventEmitter<object> = new EventEmitter();
+  carritoUpdated: EventEmitter<void> = new EventEmitter();
+  facturaRealizada: EventEmitter<void> = new EventEmitter();
 
   carrito: Array<Libros> = [];
   precioFinal: number = 0;
@@ -48,11 +49,7 @@ export class CarritoService {
     if (libroRepetido == undefined) {
       this.carrito.push({ ...libro, libroCantidad: 1 });
       this.precioFinal += libro.libroPrecio;
-      this.carritoUpdated.emit({
-        carritoLength: this.carrito.length,
-        carrito: this.carrito,
-        precioFinal: this.precioFinal,
-      });
+      this.carritoUpdated.emit();
       return this.alertaToast('success', 'Libro agregado');
     } else {
       if (libroRepetido.libroCantidad! >= 10) {
@@ -79,10 +76,7 @@ export class CarritoService {
       const indexLibro = this.carrito.indexOf(libro!);
       this.carrito[indexLibro].libroCantidad!++;
       this.precioFinal += libro!.libroPrecio;
-      this.carritoUpdated.emit({
-        carrito: this.carrito,
-        precioFinal: this.precioFinal,
-      });
+      this.carritoUpdated.emit();
     }
   }
   decrementarCantidadCarrito(id: number): void {
@@ -95,10 +89,7 @@ export class CarritoService {
       const indexLibro = this.carrito.indexOf(libro!);
       this.carrito[indexLibro].libroCantidad!--;
       this.precioFinal -= libro!.libroPrecio;
-      this.carritoUpdated.emit({
-        carrito: this.carrito,
-        precioFinal: this.precioFinal,
-      });
+      this.carritoUpdated.emit();
     }
   }
   async eliminarLibroCarrito(id: number): Promise<void> {
@@ -118,26 +109,16 @@ export class CarritoService {
       const indexLibro = this.carrito.indexOf(libro!);
       this.carrito.splice(indexLibro, 1);
       this.precioFinal -= libro!.libroPrecio * libro!.libroCantidad!;
-      this.carritoUpdated.emit({
-        carritoLength: this.carrito.length,
-        carrito: this.carrito,
-        precioFinal: this.precioFinal,
-      });
+      this.carritoUpdated.emit();
     }
   }
   vaciarCarrito(): void {
     this.carrito.length != 0 && ((this.carrito = []), (this.precioFinal = 0));
-    this.carritoUpdated.emit({
-      carritoLength: this.carrito.length,
-      carrito: this.carrito,
-      precioFinal: this.precioFinal,
-    });
+    this.carritoUpdated.emit();
   }
   ordenarCarrito(): void {
     this.carrito.sort((a: any, b: any) => a.libroPrecio - b.libroPrecio);
-    this.carritoUpdated.emit({
-      carrito: this.carrito,
-    });
+    this.carritoUpdated.emit();
   }
   async enviarCarrito(): Promise<any> {
     if (this.carrito.length != 0) {
@@ -162,7 +143,9 @@ export class CarritoService {
             precioTotal: this.precioFinal,
             librosComprados: [...this.carrito],
           };
-          this.dataService.postFactura(JSON.stringify(factura)).subscribe();
+          this.dataService
+            .postFactura(JSON.stringify(factura))
+            .subscribe(() => this.facturaRealizada.emit());
           this.vaciarCarrito();
           this.ocultarCarrito();
           return this.alertaSimple(
